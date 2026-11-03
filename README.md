@@ -173,7 +173,7 @@ cd frontend
 npm run dev
 ```
 
-O front-end fica em **http://localhost:5173**.
+O front-end fica em **http://127.0.0.1:5173**. Se a porta 5173 estiver ocupada, o Vite para com um aviso em vez de subir em outra porta.
 
 ---
 
