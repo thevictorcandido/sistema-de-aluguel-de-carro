@@ -1,0 +1,50 @@
+@startuml pacotes
+title Sistema de Aluguel de Carros - Diagrama de Pacotes, Visão Lógica (v1)
+skinparam shadowing false
+skinparam packageStyle folder
+
+package "Subsistema de Construção Dinâmica de Páginas Web\n(frontend - React + Vite) - View" as frontend {
+  package "pages" as pages
+  package "components" as components
+  package "routes" as routes
+  package "contexts" as contexts
+  package "services" as services
+}
+
+package "Subsistema de Gestão de Pedidos e Contratos\n(backend - br.com.aluguelcarros - Spring Boot)" as backend {
+  package "controller" as controller
+  package "dto" as dto
+  package "security" as security
+  package "service" as service
+  package "repository" as repository
+  package "model" as model
+  package "exception" as exception
+}
+
+database "Supabase\n(PostgreSQL)" as banco
+
+routes ..> pages
+pages ..> components
+pages ..> services
+pages ..> contexts
+contexts ..> services
+
+services ..> controller : <<HTTP/JSON>>
+
+controller ..> dto
+controller ..> service
+security ..> repository
+controller ..> exception
+service ..> repository
+service ..> model
+service ..> dto
+service ..> exception
+repository ..> model
+repository ..> banco : <<JDBC>>
+
+note bottom of controller
+  MVC: controller é o Controller,
+  service, repository e model formam o Model,
+  e o React faz o papel de View.
+end note
+@enduml
