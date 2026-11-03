@@ -1,0 +1,51 @@
+/* Tokens do DESIGN.md. Toda cor e medida da interface sai daqui. */
+:root {
+  --ground: #f9fbfc;
+  --surface: #ffffff;
+  --raised: #f4f6f8;
+  --active: #ebedee;
+  --border: #e8eaec;
+  --rule: #f0f1f2;
+  --control: #cdced1;
+  --text: #131416;
+  --muted: #5d5f60;
+  --accent: #1b6c80;
+  --accent-hover: #155868;
+  --accent-pale: #eef6f8;
+  --positive: #1e7b4f;
+  --negative: #c4242a;
+  --warning: #92400e;
+  --placa-azul: #1f4fa3;
+
+  --status-enviado-bg: #ebedee;
+  --status-enviado-ink: #353736;
+  --status-analise-bg: #fffbeb;
+  --status-analise-ink: #92400e;
+  --status-aprovado-bg: #dcfae5;
+  --status-aprovado-ink: #04250e;
+  --status-reprovado-bg: #ffedea;
+  --status-reprovado-ink: #831c1e;
+  --status-contratado-bg: #e3f1f4;
+  --status-contratado-ink: #0e3d49;
+
+  --radius-card: 8px;
+  --radius-control: 6px;
+  --radius-sheet: 16px;
+  --sheet-inset: 8px;
+  --row-height: 48px;
+  --sidebar-width: 228px;
+  --topbar-height: 48px;
+  --gap: 24px;
+  --pad: 24px;
+  --control-height: 32px;
+  --field-height: 40px;
+
+  --fs-title: 22px;
+  --fs-section: 16px;
+  --fs-kpi: 28px;
+  --fs-body: 14px;
+  --fs-small: 12px;
+
+  --font-sans: "IBM Plex Sans", Inter, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
