@@ -9,6 +9,7 @@ import Toast from '../../components/Toast/Toast.jsx'
 import { useSessao } from '../../contexts/SessaoContext.jsx'
 import { automoveis as apiAutomoveis } from '../../services/api.js'
 import { formatarMoeda, lerMoeda, moedaParaCampo } from '../../utils/formatos.js'
+import { useTituloPagina } from '../../utils/useTituloPagina.js'
 import pagina from '../Pagina.module.css'
 import styles from '../Pedidos.module.css'
 
@@ -103,6 +104,7 @@ function FormAutomovel({ carro, aoSalvar, aoCancelar }) {
 
 // Responde "quais carros estão disponíveis?": todos os automóveis, com o proprietário de cada um.
 export default function Automoveis() {
+  useTituloPagina('Automóveis')
   const { usuario } = useSessao()
   const [lista, setLista] = useState(null)
   const [erro, setErro] = useState('')
@@ -168,7 +170,7 @@ export default function Automoveis() {
       )}
 
       {lista && (
-        <div className={`${styles.tabela} ${styles.tabelaVisivel}`}>
+        <div className={`${styles.tabela} ${styles.tabelaVisivel} ${styles.comAcoes}`}>
           <table>
             <thead>
               <tr>

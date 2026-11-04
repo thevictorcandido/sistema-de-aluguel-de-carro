@@ -10,12 +10,14 @@ import SeloStatus from '../../components/SeloStatus/SeloStatus.jsx'
 import Toast from '../../components/Toast/Toast.jsx'
 import { pedidos as apiPedidos } from '../../services/api.js'
 import { formatarData, formatarMoeda } from '../../utils/formatos.js'
+import { useTituloPagina } from '../../utils/useTituloPagina.js'
 import pagina from '../Pagina.module.css'
 import styles from '../Pedidos.module.css'
 
 // Responde "o que falta para este aluguel sair?": o caminho do pedido e o parecer, quando houver.
 export default function DetalhePedido() {
   const { id } = useParams()
+  useTituloPagina(`Pedido #${id}`)
   const local = useLocation()
   const [pedido, setPedido] = useState(null)
   const [erro, setErro] = useState(null)

@@ -8,6 +8,7 @@ import Placa from '../../components/Placa/Placa.jsx'
 import { useSessao } from '../../contexts/SessaoContext.jsx'
 import { automoveis as apiAutomoveis, pedidos as apiPedidos } from '../../services/api.js'
 import { contarDiarias, formatarMoeda, hojeIso } from '../../utils/formatos.js'
+import { useTituloPagina } from '../../utils/useTituloPagina.js'
 import pagina from '../Pagina.module.css'
 import styles from '../Pedidos.module.css'
 
@@ -17,6 +18,7 @@ const AVALIADOS = ['APROVADO', 'REPROVADO']
 export default function NovoPedido() {
   const { id } = useParams()
   const modificando = Boolean(id)
+  useTituloPagina(modificando ? `Modificar pedido #${id}` : 'Novo pedido')
   const navegar = useNavigate()
   const { usuario } = useSessao()
   // O agente modifica pela fila (US09); o cliente, por Meus pedidos

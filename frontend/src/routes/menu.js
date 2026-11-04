@@ -28,3 +28,11 @@ export const AGENTES = ['EMPRESA', 'BANCO']
 export function inicioDoPerfil(perfil) {
   return MENU[perfil]?.[0].caminho ?? '/entrar'
 }
+
+// Item do menu da tela atual: o de caminho mais longo que é prefixo do endereço.
+// Assim /fila/12 marca "Fila de pedidos", e /pedidos/novo marca "Novo pedido", não "Meus pedidos".
+export function itemAtivo(itens, caminhoAtual) {
+  return itens
+    .filter((item) => caminhoAtual === item.caminho || caminhoAtual.startsWith(`${item.caminho}/`))
+    .sort((a, b) => b.caminho.length - a.caminho.length)[0]
+}

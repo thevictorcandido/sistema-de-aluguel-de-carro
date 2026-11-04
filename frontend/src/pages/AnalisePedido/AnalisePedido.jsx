@@ -10,6 +10,7 @@ import SeloStatus from '../../components/SeloStatus/SeloStatus.jsx'
 import Toast from '../../components/Toast/Toast.jsx'
 import { pedidos as apiPedidos } from '../../services/api.js'
 import { formatarData, formatarMoeda } from '../../utils/formatos.js'
+import { useTituloPagina } from '../../utils/useTituloPagina.js'
 import pagina from '../Pagina.module.css'
 import styles from '../Pedidos.module.css'
 import ExecutarContrato from './ExecutarContrato.jsx'
@@ -108,6 +109,7 @@ function FormParecer({ pedidoId, aoRegistrar }) {
 // Responde "este cliente pode pagar?": renda comprometida em destaque, rendimentos e o parecer.
 export default function AnalisePedido() {
   const { id } = useParams()
+  useTituloPagina(`Análise do pedido #${id}`)
   const local = useLocation()
   const [pedido, setPedido] = useState(null)
   const [erro, setErro] = useState(null)

@@ -6,10 +6,12 @@ import Campo from '../../components/Campo/Campo.jsx'
 import Marca from '../../components/Marca/Marca.jsx'
 import { useSessao } from '../../contexts/SessaoContext.jsx'
 import { inicioDoPerfil } from '../../routes/menu.js'
+import { useTituloPagina } from '../../utils/useTituloPagina.js'
 import styles from './Acesso.module.css'
 
 export default function Entrar() {
-  const { usuario, carregando, entrar } = useSessao()
+  useTituloPagina('Entrar')
+  const { usuario, carregando, expirou, entrar } = useSessao()
   const local = useLocation()
   const [login, setLogin] = useState('')
   const [senha, setSenha] = useState('')
@@ -45,6 +47,11 @@ export default function Entrar() {
           Entrar
         </h1>
         <p className={styles.sub}>Clientes, empresas e bancos usam o mesmo acesso.</p>
+        {expirou && (
+          <p className={styles.informe} role="status">
+            Sua sessão terminou. Entre de novo para continuar.
+          </p>
+        )}
 
         <form className={styles.formulario} onSubmit={aoEnviar} noValidate>
           <Campo

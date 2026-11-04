@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Botao from '../../components/Botao/Botao.jsx'
 import Toast from '../../components/Toast/Toast.jsx'
 import { clientes } from '../../services/api.js'
+import { useTituloPagina } from '../../utils/useTituloPagina.js'
 import pagina from '../Pagina.module.css'
 import DadosCadastrais from './DadosCadastrais.jsx'
 import ExcluirConta from './ExcluirConta.jsx'
@@ -9,6 +10,7 @@ import styles from './MeusDados.module.css'
 import Rendimentos from './Rendimentos.jsx'
 
 export default function MeusDados() {
+  useTituloPagina('Meus dados')
   const [cliente, setCliente] = useState(null)
   const [erro, setErro] = useState('')
   const [aviso, setAviso] = useState('')

@@ -8,6 +8,8 @@ export class ApiError extends Error {
   }
 }
 
+export const EVENTO_SESSAO_EXPIRADA = 'aluguel:sessao-expirada'
+
 const MENSAGEM_PADRAO = 'Não foi possível falar com o servidor. Tente de novo em instantes.'
 
 async function requisicao(metodo, caminho, corpo) {
@@ -29,6 +31,10 @@ async function requisicao(metodo, caminho, corpo) {
   const texto = await resposta.text()
   const dados = texto ? JSON.parse(texto) : null
   if (!resposta.ok) {
+    // 401 fora do login e da checagem inicial: a sessão venceu no meio do uso
+    if (resposta.status === 401 && !caminho.startsWith('/auth/')) {
+      window.dispatchEvent(new Event(EVENTO_SESSAO_EXPIRADA))
+    }
     throw new ApiError(resposta.status, dados?.mensagem ?? MENSAGEM_PADRAO, dados?.campos ?? {})
   }
   return dados

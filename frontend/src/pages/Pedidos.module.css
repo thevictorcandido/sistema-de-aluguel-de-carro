@@ -57,6 +57,8 @@
 /* Tabela */
 .tabela {
   overflow-x: auto;
+  /* Contém o texto só para leitor de tela (position: absolute), que senão alarga a página */
+  position: relative;
 }
 
 .tabela table {
@@ -590,6 +592,14 @@
 @media (max-width: 760px) {
   .tabela.tabelaVisivel {
     display: block;
+  }
+
+  /* No celular, a coluna de ações fica presa à direita enquanto a tabela rola */
+  .comAcoes th:last-child,
+  .comAcoes td:last-child {
+    position: sticky;
+    right: 0;
+    background: var(--surface);
   }
 }
 

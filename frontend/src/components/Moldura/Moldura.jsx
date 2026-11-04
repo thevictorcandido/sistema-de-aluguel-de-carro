@@ -1,8 +1,8 @@
 import { LogOut, Menu, X } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { NavLink, Outlet, useLocation, useNavigate } from 'react-router'
+import { useEffect, useRef, useState } from 'react'
+import { Link, Outlet, useLocation, useNavigate } from 'react-router'
 import { useSessao } from '../../contexts/SessaoContext.jsx'
-import { DESCRICAO_PERFIL, MENU } from '../../routes/menu.js'
+import { DESCRICAO_PERFIL, itemAtivo, MENU } from '../../routes/menu.js'
 import Marca from '../Marca/Marca.jsx'
 import styles from './Moldura.module.css'
 
@@ -12,10 +12,30 @@ export default function Moldura() {
   const navegar = useNavigate()
   const local = useLocation()
   const [menuAberto, setMenuAberto] = useState(false)
+  const botaoMenu = useRef(null)
+  const fecharMenu = useRef(null)
+  const itens = MENU[usuario.perfil]
+  const ativo = itemAtivo(itens, local.pathname)
 
   // Fecha o menu do celular ao trocar de tela
   // biome-ignore lint/correctness/useExhaustiveDependencies: reage só à mudança de rota
   useEffect(() => setMenuAberto(false), [local.pathname])
+
+  // Menu do celular: o foco entra no painel ao abrir, Esc fecha e o foco volta ao botão
+  useEffect(() => {
+    if (!menuAberto) {
+      return undefined
+    }
+    fecharMenu.current?.focus()
+    function aoTeclar(evento) {
+      if (evento.key === 'Escape') {
+        setMenuAberto(false)
+        botaoMenu.current?.focus()
+      }
+    }
+    document.addEventListener('keydown', aoTeclar)
+    return () => document.removeEventListener('keydown', aoTeclar)
+  }, [menuAberto])
 
   async function aoSair() {
     await sair()
@@ -24,13 +44,21 @@ export default function Moldura() {
 
   return (
     <div className={styles.app}>
+      <a className={styles.pular} href="#conteudo">
+        Pular para o conteúdo
+      </a>
+
       <aside className={styles.lateral} data-aberta={menuAberto || undefined}>
         <div className={styles.marca}>
           <Marca />
           <button
+            ref={fecharMenu}
             type="button"
             className={styles.fecharMenu}
-            onClick={() => setMenuAberto(false)}
+            onClick={() => {
+              setMenuAberto(false)
+              botaoMenu.current?.focus()
+            }}
             aria-label="Fechar menu"
           >
             <X size={18} aria-hidden="true" />
@@ -38,11 +66,15 @@ export default function Moldura() {
         </div>
         <nav aria-label="Principal">
           <ul className={styles.menu}>
-            {MENU[usuario.perfil].map((item) => (
+            {itens.map((item) => (
               <li key={item.caminho}>
-                <NavLink to={item.caminho} end className={styles.link}>
+                <Link
+                  to={item.caminho}
+                  className={styles.link}
+                  aria-current={item === ativo ? 'page' : undefined}
+                >
                   {item.rotulo}
-                </NavLink>
+                </Link>
               </li>
             ))}
           </ul>
@@ -51,6 +83,7 @@ export default function Moldura() {
 
       <header className={styles.topo}>
         <button
+          ref={botaoMenu}
           type="button"
           className={styles.abrirMenu}
           onClick={() => setMenuAberto(true)}
@@ -71,7 +104,7 @@ export default function Moldura() {
         </div>
       </header>
 
-      <main className={styles.folha}>
+      <main id="conteudo" className={styles.folha} tabIndex={-1}>
         <Outlet />
       </main>
     </div>

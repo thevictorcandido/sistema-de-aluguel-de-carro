@@ -8,6 +8,7 @@ import { useSessao } from '../../contexts/SessaoContext.jsx'
 import { inicioDoPerfil } from '../../routes/menu.js'
 import { clientes } from '../../services/api.js'
 import { mascaraCep, mascaraCpf, UFS } from '../../utils/formatos.js'
+import { useTituloPagina } from '../../utils/useTituloPagina.js'
 import styles from '../Entrar/Acesso.module.css'
 
 const VAZIO = {
@@ -36,6 +37,7 @@ function errosPorCampo(campos = {}) {
 }
 
 export default function CriarConta() {
+  useTituloPagina('Criar conta')
   const { usuario, carregando, entrar } = useSessao()
   const [dados, setDados] = useState(VAZIO)
   const [erros, setErros] = useState({})

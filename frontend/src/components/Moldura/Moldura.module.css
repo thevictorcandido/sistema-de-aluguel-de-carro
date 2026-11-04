@@ -91,6 +91,26 @@
   color: var(--text);
 }
 
+.pular {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 30;
+  padding: 8px 12px;
+  border-radius: var(--radius-control);
+  background: var(--text);
+  color: var(--surface);
+  transform: translateY(-200%);
+}
+
+.pular:focus {
+  transform: none;
+}
+
+.folha:focus {
+  outline: none;
+}
+
 .folha {
   background: var(--surface);
   border: 1px solid var(--border);
