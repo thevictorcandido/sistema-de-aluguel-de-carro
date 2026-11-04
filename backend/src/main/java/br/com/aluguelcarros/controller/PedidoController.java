@@ -7,6 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -43,6 +44,17 @@ public class PedidoController {
 	@GetMapping("/{id}")
 	public PedidoResponse buscar(@AuthenticationPrincipal UsuarioAutenticado usuario, @PathVariable Long id) {
 		return pedidoService.buscar(usuario, id);
+	}
+
+	@PutMapping("/{id}")
+	public PedidoResponse modificar(@AuthenticationPrincipal UsuarioAutenticado usuario, @PathVariable Long id,
+			@Valid @RequestBody NovoPedidoRequest dados) {
+		return pedidoService.modificar(usuario, id, dados);
+	}
+
+	@PostMapping("/{id}/cancelar")
+	public PedidoResponse cancelar(@AuthenticationPrincipal UsuarioAutenticado usuario, @PathVariable Long id) {
+		return pedidoService.cancelar(usuario, id);
 	}
 
 }

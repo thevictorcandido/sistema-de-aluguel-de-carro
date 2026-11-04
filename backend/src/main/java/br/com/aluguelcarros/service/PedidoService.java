@@ -59,6 +59,30 @@ public class PedidoService {
 		return lista.stream().map(PedidoResponse::de).toList();
 	}
 
+	/**
+	 * US07 e US09: o dono ou um agente troca automóvel ou datas. Um pedido já avaliado volta para ENVIADO e perde o
+	 * parecer; contratado ou cancelado não muda (409).
+	 */
+	@Transactional
+	public PedidoResponse modificar(UsuarioAutenticado usuario, Long pedidoId, NovoPedidoRequest dados) {
+		PedidoAluguel pedido = buscarVisivel(usuario, pedidoId);
+		pedido.exigirAlteravel("modificado");
+		Automovel automovel = automoveis.findById(dados.automovelId())
+				.orElseThrow(() -> CampoInvalidoException.invalido("automovelId", "Este automóvel não existe."));
+		validarPeriodo(dados.dataInicio(), dados.dataFim());
+		pedido.modificar(automovel, dados.dataInicio(), dados.dataFim());
+		pedidos.flush();
+		return PedidoResponse.de(pedido);
+	}
+
+	/** US08: só o dono cancela, e só antes de contratado. O pedido continua no histórico. */
+	@Transactional
+	public PedidoResponse cancelar(UsuarioAutenticado usuario, Long pedidoId) {
+		PedidoAluguel pedido = buscarVisivel(usuario, pedidoId);
+		pedido.cancelar();
+		return PedidoResponse.de(pedido);
+	}
+
 	/** US06: pedido de outro cliente responde 404, para não revelar que existe. */
 	@Transactional(readOnly = true)
 	public PedidoResponse buscar(UsuarioAutenticado usuario, Long pedidoId) {

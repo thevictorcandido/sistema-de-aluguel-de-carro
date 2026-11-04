@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router'
-import Botao from '../../components/Botao/Botao.jsx'
+import Aviso from '../../components/Aviso/Aviso.jsx'
+import Botao, { BotaoLink } from '../../components/Botao/Botao.jsx'
 import CaminhoPedido from '../../components/CaminhoPedido/CaminhoPedido.jsx'
+import Dialogo from '../../components/Dialogo/Dialogo.jsx'
 import Placa from '../../components/Placa/Placa.jsx'
 import SeloStatus from '../../components/SeloStatus/SeloStatus.jsx'
 import Toast from '../../components/Toast/Toast.jsx'
@@ -18,6 +20,9 @@ export default function DetalhePedido() {
   const [erro, setErro] = useState(null)
   const [aviso, setAviso] = useState(local.state?.aviso ?? '')
   const limparAviso = useCallback(() => setAviso(''), [])
+  const [confirmandoCancelamento, setConfirmandoCancelamento] = useState(false)
+  const [cancelando, setCancelando] = useState(false)
+  const [erroCancelamento, setErroCancelamento] = useState('')
 
   const carregar = useCallback(async () => {
     setErro(null)
@@ -31,6 +36,23 @@ export default function DetalhePedido() {
   useEffect(() => {
     carregar()
   }, [carregar])
+
+  // US07 e US08: modificar e cancelar só antes de contratado ou cancelado
+  const alteravel = pedido && !['CONTRATADO', 'CANCELADO'].includes(pedido.status)
+
+  async function cancelar() {
+    setErroCancelamento('')
+    setCancelando(true)
+    try {
+      setPedido(await apiPedidos.cancelar(id))
+      setConfirmandoCancelamento(false)
+      setAviso('Pedido cancelado.')
+    } catch (falha) {
+      setErroCancelamento(falha.message)
+    } finally {
+      setCancelando(false)
+    }
+  }
 
   const voltar = (
     <p className={styles.voltar}>
@@ -57,7 +79,19 @@ export default function DetalhePedido() {
           </h1>
           {pedido && <p className={pagina.sub}>Enviado em {formatarData(pedido.dataCriacao)}.</p>}
         </div>
-        {pedido && <SeloStatus status={pedido.status} />}
+        {pedido && (
+          <div className={styles.acoes}>
+            <SeloStatus status={pedido.status} />
+            {alteravel && (
+              <>
+                <BotaoLink to={`/pedidos/${id}/modificar`}>Modificar pedido</BotaoLink>
+                <Botao variante="perigo" onClick={() => setConfirmandoCancelamento(true)}>
+                  Cancelar pedido
+                </Botao>
+              </>
+            )}
+          </div>
+        )}
       </div>
 
       {erro && (
@@ -123,6 +157,26 @@ export default function DetalhePedido() {
       )}
 
       {voltar}
+
+      <Dialogo
+        aberto={confirmandoCancelamento}
+        titulo="Cancelar este pedido?"
+        aoFechar={() => setConfirmandoCancelamento(false)}
+      >
+        <p className={styles.ajuda}>
+          O pedido fica no histórico como cancelado e não pode mais ser modificado.
+        </p>
+        <Aviso>{erroCancelamento}</Aviso>
+        <div className={styles.acoesDialogo}>
+          <Botao onClick={() => setConfirmandoCancelamento(false)} disabled={cancelando}>
+            Manter pedido
+          </Botao>
+          <Botao variante="perigoCheio" onClick={cancelar} disabled={cancelando}>
+            {cancelando ? 'Cancelando…' : 'Cancelar pedido'}
+          </Botao>
+        </div>
+      </Dialogo>
+
       <Toast mensagem={aviso} aoSumir={limparAviso} />
     </>
   )

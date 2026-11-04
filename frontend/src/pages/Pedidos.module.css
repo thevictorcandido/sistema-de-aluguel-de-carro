@@ -257,6 +257,31 @@
   color: var(--muted);
 }
 
+.alerta {
+  background: var(--status-analise-bg);
+  color: var(--status-analise-ink);
+  border-radius: var(--radius-control);
+  padding: 8px 12px;
+}
+
+.linkSecundario {
+  color: var(--accent);
+  text-align: center;
+}
+
+.acoes {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.acoesDialogo {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+
 /* Detalhe */
 .cabecalhoPedido {
   display: grid;
