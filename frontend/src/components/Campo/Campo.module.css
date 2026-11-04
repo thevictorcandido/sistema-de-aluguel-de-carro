@@ -1,0 +1,41 @@
+.campo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.rotulo {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.controle {
+  height: var(--field-height);
+  border: 1px solid var(--control);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  padding: 0 12px;
+  width: 100%;
+}
+
+.controle:hover {
+  border-color: var(--muted);
+}
+
+.controle[aria-invalid="true"] {
+  border-color: var(--negative);
+}
+
+.ajuda,
+.erro {
+  font-size: var(--fs-small);
+  margin-top: 6px;
+}
+
+.ajuda {
+  color: var(--muted);
+}
+
+.erro {
+  color: var(--negative);
+}
