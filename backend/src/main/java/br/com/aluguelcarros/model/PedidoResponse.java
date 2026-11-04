@@ -22,7 +22,8 @@ public record PedidoResponse(
 		AutomovelResponse automovel,
 		ClienteResumo cliente,
 		ParecerResponse parecer,
-		FichaFinanceira ficha) {
+		FichaFinanceira ficha,
+		ContratoResponse contrato) {
 
 	/** Referência da renda comprometida mostrada ao agente. Só informa: o sistema não aprova nem reprova sozinho. */
 	public static final BigDecimal REFERENCIA_RENDA_COMPROMETIDA = new BigDecimal("30");
@@ -62,23 +63,29 @@ public record PedidoResponse(
 
 	}
 
-	/** Visão do cliente: sem a ficha financeira. */
+	/** Visão do cliente e das listas: sem a ficha financeira nem o contrato. */
 	public static PedidoResponse de(PedidoAluguel pedido) {
-		return montar(pedido, null);
+		return montar(pedido, null, null);
 	}
 
-	/** Visão do agente: com a ficha financeira do cliente. */
-	public static PedidoResponse paraAgente(PedidoAluguel pedido) {
-		return montar(pedido, FichaFinanceira.de(pedido.getCliente(), pedido.getValorTotal()));
+	/** Detalhe para o cliente: com o contrato, quando houver. */
+	public static PedidoResponse de(PedidoAluguel pedido, Contrato contrato) {
+		return montar(pedido, null, contrato == null ? null : ContratoResponse.de(contrato));
 	}
 
-	private static PedidoResponse montar(PedidoAluguel pedido, FichaFinanceira ficha) {
+	/** Detalhe para o agente: com a ficha financeira do cliente e o contrato, quando houver. */
+	public static PedidoResponse paraAgente(PedidoAluguel pedido, Contrato contrato) {
+		return montar(pedido, FichaFinanceira.de(pedido.getCliente(), pedido.getValorTotal()),
+				contrato == null ? null : ContratoResponse.de(contrato));
+	}
+
+	private static PedidoResponse montar(PedidoAluguel pedido, FichaFinanceira ficha, ContratoResponse contrato) {
 		long diarias = ChronoUnit.DAYS.between(pedido.getDataInicio(), pedido.getDataFim()) + 1;
 		return new PedidoResponse(pedido.getId(), pedido.getStatus(), pedido.getDataCriacao(),
 				pedido.getDataInicio(), pedido.getDataFim(), diarias, pedido.getValorTotal(),
 				AutomovelResponse.de(pedido.getAutomovel()),
 				new ClienteResumo(pedido.getCliente().getId(), pedido.getCliente().getNome()),
-				ParecerResponse.de(pedido.getParecer()), ficha);
+				ParecerResponse.de(pedido.getParecer()), ficha, contrato);
 	}
 
 }

@@ -3,6 +3,7 @@ import { Link, useLocation, useParams } from 'react-router'
 import Aviso from '../../components/Aviso/Aviso.jsx'
 import Botao, { BotaoLink } from '../../components/Botao/Botao.jsx'
 import CaminhoPedido from '../../components/CaminhoPedido/CaminhoPedido.jsx'
+import CartaoContrato from '../../components/CartaoContrato/CartaoContrato.jsx'
 import Dialogo from '../../components/Dialogo/Dialogo.jsx'
 import Placa from '../../components/Placa/Placa.jsx'
 import SeloStatus from '../../components/SeloStatus/SeloStatus.jsx'
@@ -152,6 +153,10 @@ export default function DetalhePedido() {
                 </p>
               )}
             </section>
+
+            {pedido.contrato && (
+              <CartaoContrato contrato={pedido.contrato} className={styles.inteiro} />
+            )}
           </div>
         </>
       )}

@@ -3,6 +3,8 @@ import { Link, useLocation, useParams } from 'react-router'
 import Aviso from '../../components/Aviso/Aviso.jsx'
 import Botao, { BotaoLink } from '../../components/Botao/Botao.jsx'
 import CaminhoPedido from '../../components/CaminhoPedido/CaminhoPedido.jsx'
+import CartaoContrato from '../../components/CartaoContrato/CartaoContrato.jsx'
+import Dialogo from '../../components/Dialogo/Dialogo.jsx'
 import Placa from '../../components/Placa/Placa.jsx'
 import SeloStatus from '../../components/SeloStatus/SeloStatus.jsx'
 import Toast from '../../components/Toast/Toast.jsx'
@@ -10,6 +12,7 @@ import { pedidos as apiPedidos } from '../../services/api.js'
 import { formatarData, formatarMoeda } from '../../utils/formatos.js'
 import pagina from '../Pagina.module.css'
 import styles from '../Pedidos.module.css'
+import ExecutarContrato from './ExecutarContrato.jsx'
 
 const PORCENTAGEM = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 1 })
 
@@ -111,6 +114,7 @@ export default function AnalisePedido() {
   const [erroAcao, setErroAcao] = useState('')
   const [aviso, setAviso] = useState(local.state?.aviso ?? '')
   const limparAviso = useCallback(() => setAviso(''), [])
+  const [executando, setExecutando] = useState(false)
 
   const carregar = useCallback(async () => {
     setErro(null)
@@ -302,12 +306,38 @@ export default function AnalisePedido() {
               {pedido.status === 'CANCELADO' && !pedido.parecer && (
                 <p className={styles.ajuda}>O cliente cancelou o pedido antes do parecer.</p>
               )}
+              {pedido.status === 'APROVADO' && (
+                <div className={styles.rodapeParecer}>
+                  <Botao variante="principal" onClick={() => setExecutando(true)}>
+                    Executar contrato
+                  </Botao>
+                </div>
+              )}
             </section>
+
+            {pedido.contrato && (
+              <CartaoContrato contrato={pedido.contrato} className={styles.inteiro} />
+            )}
           </div>
         </>
       )}
 
       {voltar}
+
+      <Dialogo aberto={executando} titulo="Executar contrato" aoFechar={() => setExecutando(false)}>
+        {pedido && (
+          <ExecutarContrato
+            pedido={pedido}
+            aoCancelar={() => setExecutando(false)}
+            aoExecutar={async () => {
+              setExecutando(false)
+              await carregar()
+              setAviso('Contrato executado.')
+            }}
+          />
+        )}
+      </Dialogo>
+
       <Toast mensagem={aviso} aoSumir={limparAviso} />
     </>
   )

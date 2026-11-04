@@ -1,0 +1,22 @@
+.cartao {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  min-width: 0;
+}
+
+.cartao h2 {
+  font-size: var(--fs-section);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.dados {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 16px;
+}
+
+.dados dt {
+  color: var(--muted);
+}

@@ -35,7 +35,7 @@ export function marcosDoPedido(pedido) {
         passo(enviado.rotulo, 'feito', enviado.data),
         passo('Em análise', 'feito'),
         passo('Aprovado', 'feito', dataParecer),
-        passo('Contratado', 'atual'),
+        passo('Contratado', 'atual', pedido.contrato?.dataAssinatura),
       ]
     case 'REPROVADO':
       return [

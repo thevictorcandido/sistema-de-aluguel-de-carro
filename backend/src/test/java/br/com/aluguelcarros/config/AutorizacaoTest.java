@@ -17,8 +17,8 @@ import br.com.aluguelcarros.application.AluguelCarrosApplication;
 import jakarta.servlet.http.Cookie;
 
 /**
- * Regras por perfil do SecurityConfig. Quando o perfil pode acessar a rota, o filtro deixa passar: a resposta é a
- * da própria rota, ou 404 enquanto a rota ainda não existe (contratos entram na tarefa 8).
+ * Regras por perfil do SecurityConfig. Quando o perfil pode acessar a rota, o filtro deixa passar e a resposta é a
+ * da própria rota.
  */
 @SpringBootTest(classes = AluguelCarrosApplication.class)
 @AutoConfigureMockMvc
@@ -56,7 +56,7 @@ class AutorizacaoTest {
 
 	@Test
 	void perfilCertoPassaPeloFiltro() throws Exception {
-		mockMvc.perform(get("/api/contratos").cookie(sessao("horizonte"))).andExpect(status().isNotFound());
+		mockMvc.perform(get("/api/contratos").cookie(sessao("horizonte"))).andExpect(status().isOk());
 		mockMvc.perform(get("/api/clientes/me").cookie(sessao("marina"))).andExpect(status().isOk());
 	}
 

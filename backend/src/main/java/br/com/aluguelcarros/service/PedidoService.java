@@ -13,6 +13,7 @@ import br.com.aluguelcarros.exception.RecursoNaoEncontradoException;
 import br.com.aluguelcarros.model.Agente;
 import br.com.aluguelcarros.model.Automovel;
 import br.com.aluguelcarros.model.Cliente;
+import br.com.aluguelcarros.model.Contrato;
 import br.com.aluguelcarros.model.NovoPedidoRequest;
 import br.com.aluguelcarros.model.Parecer;
 import br.com.aluguelcarros.model.ParecerRequest;
@@ -22,6 +23,7 @@ import br.com.aluguelcarros.model.Perfil;
 import br.com.aluguelcarros.repository.AgenteRepository;
 import br.com.aluguelcarros.repository.AutomovelRepository;
 import br.com.aluguelcarros.repository.ClienteRepository;
+import br.com.aluguelcarros.repository.ContratoRepository;
 import br.com.aluguelcarros.repository.PedidoAluguelRepository;
 import br.com.aluguelcarros.security.UsuarioAutenticado;
 
@@ -32,14 +34,16 @@ public class PedidoService {
 	private final ClienteRepository clientes;
 	private final AutomovelRepository automoveis;
 	private final AgenteRepository agentes;
+	private final ContratoRepository contratos;
 	private final Clock relogio;
 
 	public PedidoService(PedidoAluguelRepository pedidos, ClienteRepository clientes, AutomovelRepository automoveis,
-			AgenteRepository agentes, Clock relogio) {
+			AgenteRepository agentes, ContratoRepository contratos, Clock relogio) {
 		this.pedidos = pedidos;
 		this.clientes = clientes;
 		this.automoveis = automoveis;
 		this.agentes = agentes;
+		this.contratos = contratos;
 		this.relogio = relogio;
 	}
 
@@ -100,7 +104,7 @@ public class PedidoService {
 	public PedidoResponse abrirAnalise(UsuarioAutenticado usuario, Long pedidoId) {
 		PedidoAluguel pedido = buscarVisivel(usuario, pedidoId);
 		pedido.iniciarAnalise();
-		return PedidoResponse.paraAgente(pedido);
+		return PedidoResponse.paraAgente(pedido, null);
 	}
 
 	/** US10: o parecer guarda agente, resultado, justificativa e data; favorável aprova, desfavorável reprova. */
@@ -112,11 +116,13 @@ public class PedidoService {
 		pedido.registrarParecer(new Parecer(agente, dados.positivo(), dados.justificativa().trim(),
 				LocalDateTime.now(relogio)));
 		pedidos.flush();
-		return PedidoResponse.paraAgente(pedido);
+		return PedidoResponse.paraAgente(pedido, null);
 	}
 
-	private static PedidoResponse visao(UsuarioAutenticado usuario, PedidoAluguel pedido) {
-		return usuario.perfil() == Perfil.CLIENTE ? PedidoResponse.de(pedido) : PedidoResponse.paraAgente(pedido);
+	private PedidoResponse visao(UsuarioAutenticado usuario, PedidoAluguel pedido) {
+		Contrato contrato = contratos.findByPedidoId(pedido.getId()).orElse(null);
+		return usuario.perfil() == Perfil.CLIENTE ? PedidoResponse.de(pedido, contrato)
+				: PedidoResponse.paraAgente(pedido, contrato);
 	}
 
 	PedidoAluguel buscarVisivel(UsuarioAutenticado usuario, Long pedidoId) {
