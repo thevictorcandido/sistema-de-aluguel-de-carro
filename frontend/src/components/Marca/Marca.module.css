@@ -1,0 +1,28 @@
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.placa {
+  width: 30px;
+  height: 20px;
+  border: 1.5px solid var(--accent);
+  border-radius: 3px;
+  display: grid;
+  grid-template-rows: 5px 1fr;
+  overflow: hidden;
+}
+
+.placa::before {
+  content: "";
+  background: var(--accent);
+}
+
+.placa span {
+  font: 600 10px / 1 var(--font-mono);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+}
