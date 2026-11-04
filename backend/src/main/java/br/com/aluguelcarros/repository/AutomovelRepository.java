@@ -10,4 +10,12 @@ public interface AutomovelRepository extends JpaRepository<Automovel, Long> {
 
 	List<Automovel> findAllByOrderByMarcaAscModeloAsc();
 
+	boolean existsByPlaca(String placa);
+
+	boolean existsByPlacaAndIdNot(String placa, Long id);
+
+	boolean existsByMatricula(String matricula);
+
+	boolean existsByMatriculaAndIdNot(String matricula, Long id);
+
 }
