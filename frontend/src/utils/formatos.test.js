@@ -1,5 +1,14 @@
 import { describe, expect, it } from 'vitest'
-import { formatarMoeda, lerMoeda, mascaraCep, mascaraCpf, moedaParaCampo } from './formatos.js'
+import {
+  contarDiarias,
+  formatarData,
+  formatarMoeda,
+  formatarPeriodo,
+  lerMoeda,
+  mascaraCep,
+  mascaraCpf,
+  moedaParaCampo,
+} from './formatos.js'
 
 describe('moeda', () => {
   it('formata em reais', () => {
@@ -42,5 +51,25 @@ describe('mascaraCep', () => {
     expect(mascaraCep('30160')).toBe('30160')
     expect(mascaraCep('30160011')).toBe('30160-011')
     expect(mascaraCep('30.160-0119')).toBe('30160-011')
+  })
+})
+
+describe('datas', () => {
+  it('mostra a data no formato brasileiro sem mudar o dia por causa do fuso', () => {
+    expect(formatarData('2026-11-10')).toBe('10/11/2026')
+    expect(formatarData('2026-11-03T23:59:00')).toBe('03/11/2026')
+    expect(formatarData(null)).toBe('')
+  })
+
+  it('encurta o período quando o ano é o mesmo', () => {
+    expect(formatarPeriodo('2026-11-10', '2026-11-19')).toBe('10/11 a 19/11')
+    expect(formatarPeriodo('2026-12-30', '2027-01-02')).toBe('30/12/2026 a 02/01/2027')
+  })
+
+  it('conta as diárias incluindo início e fim', () => {
+    expect(contarDiarias('2026-11-10', '2026-11-19')).toBe(10)
+    expect(contarDiarias('2026-11-10', '2026-11-10')).toBe(1)
+    expect(contarDiarias('2026-11-10', '2026-11-09')).toBe(0)
+    expect(contarDiarias('2026-10-30', '2026-11-02')).toBe(4)
   })
 })

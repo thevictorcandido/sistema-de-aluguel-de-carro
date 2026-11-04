@@ -55,3 +55,12 @@
 .perigoCheio:hover {
   background: #a51e23;
 }
+
+.botao:is(a) {
+  text-decoration: none;
+  color: inherit;
+}
+
+.principal:is(a) {
+  color: #fff;
+}
