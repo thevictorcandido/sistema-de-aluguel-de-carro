@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.aluguelcarros.model.NovoPedidoRequest;
+import br.com.aluguelcarros.model.ParecerRequest;
 import br.com.aluguelcarros.model.PedidoResponse;
 import br.com.aluguelcarros.security.UsuarioAutenticado;
 import br.com.aluguelcarros.service.PedidoService;
@@ -50,6 +51,17 @@ public class PedidoController {
 	public PedidoResponse modificar(@AuthenticationPrincipal UsuarioAutenticado usuario, @PathVariable Long id,
 			@Valid @RequestBody NovoPedidoRequest dados) {
 		return pedidoService.modificar(usuario, id, dados);
+	}
+
+	@PostMapping("/{id}/analise")
+	public PedidoResponse abrirAnalise(@AuthenticationPrincipal UsuarioAutenticado usuario, @PathVariable Long id) {
+		return pedidoService.abrirAnalise(usuario, id);
+	}
+
+	@PostMapping("/{id}/parecer")
+	public PedidoResponse registrarParecer(@AuthenticationPrincipal UsuarioAutenticado usuario, @PathVariable Long id,
+			@Valid @RequestBody ParecerRequest dados) {
+		return pedidoService.registrarParecer(usuario, id, dados);
 	}
 
 	@PostMapping("/{id}/cancelar")

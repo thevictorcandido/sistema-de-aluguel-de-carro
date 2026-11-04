@@ -5,6 +5,7 @@ import Botao from '../../components/Botao/Botao.jsx'
 import Campo from '../../components/Campo/Campo.jsx'
 import Dialogo from '../../components/Dialogo/Dialogo.jsx'
 import Placa from '../../components/Placa/Placa.jsx'
+import { useSessao } from '../../contexts/SessaoContext.jsx'
 import { automoveis as apiAutomoveis, pedidos as apiPedidos } from '../../services/api.js'
 import { contarDiarias, formatarMoeda, hojeIso } from '../../utils/formatos.js'
 import pagina from '../Pagina.module.css'
@@ -17,6 +18,9 @@ export default function NovoPedido() {
   const { id } = useParams()
   const modificando = Boolean(id)
   const navegar = useNavigate()
+  const { usuario } = useSessao()
+  // O agente modifica pela fila (US09); o cliente, por Meus pedidos
+  const base = usuario?.perfil === 'CLIENTE' ? '/pedidos' : '/fila'
   const hoje = hojeIso()
   const [carros, setCarros] = useState(null)
   const [original, setOriginal] = useState(null)
@@ -67,7 +71,7 @@ export default function NovoPedido() {
         ? await apiPedidos.modificar(id, dados)
         : await apiPedidos.criar(dados)
       const aviso = modificando ? 'Pedido modificado.' : 'Pedido enviado.'
-      navegar(`/pedidos/${pedido.id}`, { state: { aviso } })
+      navegar(`${base}/${pedido.id}`, { state: { aviso } })
     } catch (falha) {
       setErros(falha.campos ?? {})
       setErroGeral(falha.message)
@@ -184,7 +188,7 @@ export default function NovoPedido() {
             {enviando ? 'Salvando…' : modificando ? 'Salvar alterações' : 'Enviar pedido'}
           </Botao>
           {modificando && (
-            <Link className={styles.linkSecundario} to={`/pedidos/${id}`}>
+            <Link className={styles.linkSecundario} to={`${base}/${id}`}>
               Voltar sem alterar
             </Link>
           )}
