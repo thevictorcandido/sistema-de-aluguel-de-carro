@@ -36,3 +36,9 @@ export function itemAtivo(itens, caminhoAtual) {
     .filter((item) => caminhoAtual === item.caminho || caminhoAtual.startsWith(`${item.caminho}/`))
     .sort((a, b) => b.caminho.length - a.caminho.length)[0]
 }
+
+// Depois do login, volta para a tela que a pessoa tentou abrir, desde que ela seja do perfil que entrou.
+// Sem isso, quem entra logo depois de outra pessoa sair cairia na última tela dela, com "Sem permissão".
+export function destinoDepoisDoLogin(perfil, tentou) {
+  return tentou && itemAtivo(MENU[perfil] ?? [], tentou) ? tentou : inicioDoPerfil(perfil)
+}

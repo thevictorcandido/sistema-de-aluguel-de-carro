@@ -5,7 +5,7 @@ import Botao from '../../components/Botao/Botao.jsx'
 import Campo from '../../components/Campo/Campo.jsx'
 import Marca from '../../components/Marca/Marca.jsx'
 import { useSessao } from '../../contexts/SessaoContext.jsx'
-import { inicioDoPerfil } from '../../routes/menu.js'
+import { destinoDepoisDoLogin } from '../../routes/menu.js'
 import { useTituloPagina } from '../../utils/useTituloPagina.js'
 import styles from './Acesso.module.css'
 
@@ -22,7 +22,7 @@ export default function Entrar() {
   // Logado, segue para a tela que tentou abrir antes do login ou para a inicial do perfil.
   // Também é o que redireciona logo depois de entrar, quando a sessão é preenchida.
   if (!carregando && usuario) {
-    return <Navigate to={local.state?.de ?? inicioDoPerfil(usuario.perfil)} replace />
+    return <Navigate to={destinoDepoisDoLogin(usuario.perfil, local.state?.de)} replace />
   }
 
   async function aoEnviar(evento) {
