@@ -7,15 +7,19 @@ Cada revisão fica em uma pasta própria, sem sobrescrever as anteriores. Os arq
 | Versão | Data | Mudanças |
 |---|---|---|
 | [v1](v1) | 2026-11-02 | Modelos iniciais, a partir do enunciado |
-| [v2](v2) | 2026-11-04 | Classes alinhadas ao código da tarefa 2: `valorDiaria` em `Automovel`, `getValorTotal` em `PedidoAluguel`, `getRendaMensal` em `Cliente`, `getNome` em `Usuario` e as regras de status em `StatusPedido` |
+| [v2](v2) | 2026-11-04 | Pacotes sem `dto`, com `application` e `config`, como nos projetos da disciplina. Classes alinhadas ao código da tarefa 2: `valorDiaria` em `Automovel`, `getValorTotal` em `PedidoAluguel`, `getRendaMensal` em `Cliente`, `getNome` em `Usuario` e as regras de status em `StatusPedido` |
 
 ## v2
 
-Só o diagrama de classes mudou. Casos de uso, histórias e pacotes continuam os da v1.
+Mudaram os diagramas de classes e de pacotes. Casos de uso e histórias continuam os da v1.
 
 ### Classes
 
 ![Diagrama de classes v2](v2/classes.svg)
+
+### Pacotes
+
+![Diagrama de pacotes v2](v2/pacotes.svg)
 
 ## v1
 

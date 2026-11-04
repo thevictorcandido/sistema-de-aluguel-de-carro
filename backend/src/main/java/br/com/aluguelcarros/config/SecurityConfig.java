@@ -1,4 +1,4 @@
-package br.com.aluguelcarros.security;
+package br.com.aluguelcarros.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

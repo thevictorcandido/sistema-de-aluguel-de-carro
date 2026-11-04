@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.aluguelcarros.application.AluguelCarrosApplication;
 import br.com.aluguelcarros.model.Agente;
 import br.com.aluguelcarros.model.Automovel;
 import br.com.aluguelcarros.model.Banco;
@@ -27,7 +28,7 @@ import br.com.aluguelcarros.model.TipoContrato;
 import jakarta.persistence.EntityManager;
 
 /** Confere as migrações e os dados iniciais contra o mapeamento das entidades, no H2. */
-@SpringBootTest
+@SpringBootTest(classes = AluguelCarrosApplication.class)
 @Transactional
 class PersistenciaTest {
 

@@ -25,16 +25,17 @@ O Vite repassa `/api` para a porta 8080. Assim, front e API ficam na mesma orige
 
 ### Pacotes
 
-Seguem o [diagrama de pacotes](uml/v1/pacotes.svg).
+Seguem o [diagrama de pacotes](uml/v2/pacotes.svg) e a organização dos projetos da disciplina, como o CandidatosTSE_2: sem pacote `dto`.
 
 | Lado | Pacote | Responsabilidade |
 |---|---|---|
+| Back | `application` | Classe principal, com a varredura dos demais pacotes |
+| Back | `config` | Configuração do Spring Security |
 | Back | `controller` | Rotas REST, sem regra de negócio |
-| Back | `dto` | Entrada e saída da API, com validação |
 | Back | `service` | Regras de negócio e verificação de dono |
 | Back | `repository` | Spring Data JPA |
-| Back | `model` | Entidades JPA e enums |
-| Back | `security` | JWT, filtro, configuração do Spring Security |
+| Back | `model` | Entidades JPA, enums e as classes de entrada e saída da API, como o pedido de login |
+| Back | `security` | Geração e leitura do JWT e o filtro que o confere |
 | Back | `exception` | Erros de negócio e o tratador global |
 | Front | `routes` | Rotas e guarda por perfil |
 | Front | `pages` | Uma pasta por tela do DESIGN.md |
@@ -158,3 +159,9 @@ O GitHub Actions roda `mvn verify`, `vitest` e Biome em cada PR. O Playwright ro
 | 1 | Limite de tentativas de login | Fora do escopo, por não haver deploy; registrar no README |
 | 2 | Backup do Supabase | O plano gratuito não guarda backups; as migrações e os dados iniciais recriam o banco |
 | 3 | Valor da diária e referência de 30% | Valores de exemplo nos dados iniciais, mostrados ao professor junto com a v2 |
+
+## Decisões
+
+| Data | Decisão | Motivo |
+|---|---|---|
+| 2026-11-04 | Sem pacote `dto`; classe principal em `application` e `SecurityConfig` em `config` | Seguir a organização usada nas aulas e na prova (CandidatosTSE_2, BD_RestAPI_PostgreSQL, JWT_RestAPI). As classes de entrada e saída ficam em `model`, como o `LoginRequest` do JWT_RestAPI, e nunca levam o hash da senha |

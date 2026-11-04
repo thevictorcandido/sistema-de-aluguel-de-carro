@@ -97,13 +97,13 @@ O automóvel pode ficar registrado como propriedade do cliente, da empresa ou do
 O sistema segue o MVC com dois subsistemas, como pede o enunciado:
 
 - **Construção dinâmica das páginas web** (`frontend/`): o React faz o papel de View e consome a API em JSON.
-- **Gestão de pedidos e contratos** (`backend/`): `controller` é o Controller; `service`, `repository` e `model` formam o Model.
+- **Gestão de pedidos e contratos** (`backend/`): `controller` é o Controller; `service`, `repository` e `model` formam o Model. Os pacotes seguem a organização usada na disciplina, com a classe principal em `application` e sem pacote `dto`.
 
 Durante o desenvolvimento, o Vite repassa as chamadas a `/api` para o Spring Boot. Front e API ficam na mesma origem, sem necessidade de CORS.
 
 | Diagrama de Pacotes | Diagrama de Classes |
 | :---: | :---: |
-| <img src="docs/uml/v1/pacotes.svg" alt="Diagrama de pacotes" width="380px"> | <img src="docs/uml/v2/classes.svg" alt="Diagrama de classes" width="380px"> |
+| <img src="docs/uml/v2/pacotes.svg" alt="Diagrama de pacotes" width="380px"> | <img src="docs/uml/v2/classes.svg" alt="Diagrama de classes" width="380px"> |
 
 Detalhes das camadas, rotas da API e regras de negócio em [docs/SPEC.md](docs/SPEC.md).
 
@@ -194,11 +194,12 @@ O front-end fica em **http://127.0.0.1:5173**. Se a porta 5173 estiver ocupada, 
 .
 ├── backend/                 # API Spring Boot
 │   ├── src/main/java/br/com/aluguelcarros/
+│   │   ├── application/     # Classe principal
+│   │   ├── config/          # Configuração do Spring Security
 │   │   ├── controller/      # Rotas REST
 │   │   ├── exception/       # Erros de regra de negócio
-│   │   ├── model/           # Entidades JPA e enums
-│   │   ├── repository/      # Spring Data JPA
-│   │   └── security/        # Configuração do Spring Security
+│   │   ├── model/           # Entidades JPA, enums e classes de entrada e saída da API
+│   │   └── repository/      # Spring Data JPA
 │   └── src/main/resources/  # Perfis e migrações do Flyway
 ├── frontend/                # React + Vite
 │   └── src/

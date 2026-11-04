@@ -10,7 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;
 
-@SpringBootTest
+import br.com.aluguelcarros.application.AluguelCarrosApplication;
+
+@SpringBootTest(classes = AluguelCarrosApplication.class)
 @AutoConfigureMockMvc
 class HealthControllerTest {
 
