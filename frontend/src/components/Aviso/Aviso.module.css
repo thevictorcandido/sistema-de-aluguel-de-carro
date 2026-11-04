@@ -1,0 +1,6 @@
+.aviso {
+  background: var(--status-reprovado-bg);
+  color: var(--status-reprovado-ink);
+  border-radius: var(--radius-control);
+  padding: 8px 12px;
+}

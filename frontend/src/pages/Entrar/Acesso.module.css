@@ -1,0 +1,82 @@
+/* Layout das telas fora da moldura: Entrar e Criar conta. */
+.pagina {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+}
+
+.folha {
+  width: min(400px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sheet);
+  padding: var(--pad);
+}
+
+.titulo {
+  font-size: var(--fs-title);
+  font-weight: 600;
+  line-height: 1.25;
+  margin-top: 24px;
+}
+
+.sub {
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.bloco {
+  border: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bloco + .bloco {
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+}
+
+.legenda {
+  font-size: var(--fs-section);
+  font-weight: 600;
+  padding: 0;
+  margin-bottom: 4px;
+}
+
+.par {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.parEstreito {
+  display: grid;
+  grid-template-columns: 1fr 96px;
+  gap: 12px;
+}
+
+.acao {
+  width: 100%;
+  height: var(--field-height);
+}
+
+.rodape {
+  margin-top: 20px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.rodape a {
+  color: var(--accent);
+  font-weight: 500;
+}

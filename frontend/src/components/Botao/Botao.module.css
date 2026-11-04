@@ -1,0 +1,45 @@
+.botao {
+  height: var(--control-height);
+  padding: 0 14px;
+  border-radius: var(--radius-control);
+  border: 1px solid var(--control);
+  background: var(--surface);
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition:
+    background-color 120ms ease,
+    transform 80ms ease;
+}
+
+.botao:hover {
+  background: var(--raised);
+}
+
+.botao:active {
+  transform: translateY(1px);
+}
+
+.botao:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+}
+
+.principal {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 500;
+}
+
+.principal:hover {
+  background: var(--accent-hover);
+}
+
+.perigo {
+  color: var(--negative);
+}

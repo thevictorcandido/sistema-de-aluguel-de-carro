@@ -1,0 +1,21 @@
+/* Título e linha de apoio das telas dentro da moldura. */
+.titulo {
+  font-size: var(--fs-title);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.sub {
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.acoes {
+  margin-top: 20px;
+  display: flex;
+  gap: 8px;
+}
+
+.acoes a {
+  text-decoration: none;
+}

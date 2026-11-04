@@ -1,0 +1,153 @@
+.app {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  grid-template-rows: var(--topbar-height) 1fr;
+  min-height: 100vh;
+}
+
+.lateral {
+  grid-row: 1 / 3;
+  padding: 12px;
+  background: var(--ground);
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 36px;
+  padding: 0 8px;
+  margin-bottom: 20px;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.link {
+  display: block;
+  padding: 7px 10px;
+  border-radius: var(--radius-control);
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--text);
+}
+
+.link[aria-current="page"] {
+  background: var(--active);
+  color: var(--text);
+  font-weight: 500;
+}
+
+.topo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 calc(var(--sheet-inset) + 8px) 0 0;
+}
+
+.conta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.quem {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.2;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.quem b {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.sair {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--control-height);
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.sair:hover {
+  background: var(--active);
+  color: var(--text);
+}
+
+.folha {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sheet);
+  margin: 0 var(--sheet-inset) var(--sheet-inset) 0;
+  padding: var(--pad);
+  min-width: 0;
+}
+
+.abrirMenu,
+.fecharMenu {
+  display: none;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  cursor: pointer;
+  place-items: center;
+}
+
+@media (max-width: 760px) {
+  .app {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lateral {
+    display: none;
+  }
+
+  .lateral[data-aberta] {
+    display: block;
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(280px, 85vw);
+    z-index: 10;
+    box-shadow: 0 0 0 100vmax rgb(19 20 22 / 0.35);
+  }
+
+  .abrirMenu,
+  .fecharMenu {
+    display: grid;
+  }
+
+  .topo {
+    justify-content: space-between;
+    padding: 0 8px 0 4px;
+  }
+
+  .quem {
+    display: none;
+  }
+
+  .folha {
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    padding: 16px;
+  }
+}
