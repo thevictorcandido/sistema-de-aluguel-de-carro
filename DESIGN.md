@@ -150,6 +150,7 @@ Tabela com placa, matrícula, marca, modelo, ano e proprietário. Cadastrar e ed
 | Erro da API | Faixa no topo da folha com a mensagem e "Tentar de novo" |
 | Erro de campo | Texto em `--negative` abaixo do campo, ligado por `aria-describedby` |
 | Sem permissão | Tela "Você não tem acesso a esta página" com link para o início |
+| Sessão vencida | Volta para Entrar com o aviso "Sua sessão terminou. Entre de novo para continuar." e, depois do login, para a tela em que estava |
 | Não encontrado | Página 404 com link para o início |
 | Ação concluída | Aviso discreto no canto inferior por 4 segundos: "Pedido enviado" |
 

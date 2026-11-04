@@ -6,6 +6,7 @@ import Placa from '../../components/Placa/Placa.jsx'
 import { useSessao } from '../../contexts/SessaoContext.jsx'
 import { contratos as apiContratos } from '../../services/api.js'
 import { formatarData, formatarMoeda } from '../../utils/formatos.js'
+import { useTituloPagina } from '../../utils/useTituloPagina.js'
 import pagina from '../Pagina.module.css'
 import styles from '../Pedidos.module.css'
 
@@ -15,6 +16,7 @@ export default function Contratos() {
   const [lista, setLista] = useState(null)
   const [erro, setErro] = useState('')
   const titulo = usuario.perfil === 'BANCO' ? 'Contratos e créditos' : 'Contratos'
+  useTituloPagina(titulo)
 
   const carregar = useCallback(async () => {
     setErro('')

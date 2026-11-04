@@ -1,9 +1,11 @@
 import { Link } from 'react-router'
 import Marca from '../../components/Marca/Marca.jsx'
+import { useTituloPagina } from '../../utils/useTituloPagina.js'
 import acesso from '../Entrar/Acesso.module.css'
 import styles from '../Pagina.module.css'
 
 export default function NaoEncontrado() {
+  useTituloPagina('Página não encontrada')
   return (
     <main className={acesso.pagina}>
       <section className={acesso.folha}>

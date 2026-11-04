@@ -6,6 +6,7 @@ import Placa from '../../components/Placa/Placa.jsx'
 import SeloStatus, { STATUS } from '../../components/SeloStatus/SeloStatus.jsx'
 import { pedidos as apiPedidos } from '../../services/api.js'
 import { formatarData, formatarMoeda, formatarPeriodo, hojeIso } from '../../utils/formatos.js'
+import { useTituloPagina } from '../../utils/useTituloPagina.js'
 import pagina from '../Pagina.module.css'
 import styles from '../Pedidos.module.css'
 
@@ -27,6 +28,7 @@ function resumo(aguardando) {
 }
 
 export default function FilaPedidos() {
+  useTituloPagina('Fila de pedidos')
   const navegar = useNavigate()
   const [lista, setLista] = useState(null)
   const [erro, setErro] = useState('')
