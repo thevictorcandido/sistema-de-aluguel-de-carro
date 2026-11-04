@@ -59,6 +59,9 @@ export const clientes = {
 
 export const automoveis = {
   listar: () => api.get('/automoveis'),
+  cadastrar: (dados) => api.post('/automoveis', dados),
+  atualizar: (id, dados) => api.put(`/automoveis/${id}`, dados),
+  excluir: (id) => api.delete(`/automoveis/${id}`),
 }
 
 export const pedidos = {

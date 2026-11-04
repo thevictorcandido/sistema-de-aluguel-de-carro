@@ -592,3 +592,31 @@
     display: block;
   }
 }
+
+/* Automóveis */
+.formAutomovel {
+  display: grid;
+  gap: 12px;
+}
+
+.acoesLinha {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.icone {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.icone:hover {
+  background: var(--active);
+  color: var(--text);
+}

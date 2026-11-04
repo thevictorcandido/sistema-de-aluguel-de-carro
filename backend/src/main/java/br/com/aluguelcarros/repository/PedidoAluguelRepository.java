@@ -18,4 +18,6 @@ public interface PedidoAluguelRepository extends JpaRepository<PedidoAluguel, Lo
 
 	void deleteByClienteId(Long clienteId);
 
+	boolean existsByAutomovelId(Long automovelId);
+
 }
