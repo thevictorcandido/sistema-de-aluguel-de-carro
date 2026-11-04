@@ -69,4 +69,9 @@ export const pedidos = {
   cancelar: (id) => api.post(`/pedidos/${id}/cancelar`),
   abrirAnalise: (id) => api.post(`/pedidos/${id}/analise`),
   registrarParecer: (id, dados) => api.post(`/pedidos/${id}/parecer`, dados),
+  executarContrato: (id, dados) => api.post(`/pedidos/${id}/contrato`, dados),
+}
+
+export const contratos = {
+  listar: () => api.get('/contratos'),
 }
