@@ -17,6 +17,29 @@ export function mascaraCep(valor) {
   return d.length > 5 ? `${d.slice(0, 5)}-${d.slice(5)}` : d
 }
 
+const MOEDA = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+
+export function formatarMoeda(valor) {
+  return MOEDA.format(Number(valor))
+}
+
+// Lê um valor digitado em reais: "4.200,50", "4200,50" ou "4200.50". Devolve null se não for número.
+export function lerMoeda(texto) {
+  const limpo = texto.trim().replace(/\s|R\$/g, '')
+  const soMilhar = /^\d{1,3}(\.\d{3})+$/.test(limpo)
+  const normalizado =
+    limpo.includes(',') || soMilhar ? limpo.replace(/\./g, '').replace(',', '.') : limpo
+  if (!/^\d+(\.\d{1,2})?$/.test(normalizado)) {
+    return null
+  }
+  return Number(normalizado)
+}
+
+// Mostra um número no campo de valor do jeito que se digita em reais: 4200.5 vira "4200,50".
+export function moedaParaCampo(valor) {
+  return Number(valor).toFixed(2).replace('.', ',')
+}
+
 export const UFS = [
   'AC',
   'AL',

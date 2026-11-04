@@ -1,0 +1,207 @@
+/* Configurações em duas colunas do DESIGN.md: rótulo e descrição à esquerda, painel à direita. */
+.cabecalho {
+  margin-bottom: 8px;
+}
+
+.secao {
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) minmax(0, 1.8fr);
+  gap: var(--gap);
+  padding: 32px 0;
+  max-width: 1152px;
+}
+
+.secao + .secao {
+  border-top: 1px solid var(--rule);
+}
+
+.rotulo h2 {
+  font-size: var(--fs-section);
+  font-weight: 500;
+  margin-top: 6px;
+}
+
+.rotulo p {
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.painel {
+  background: var(--raised);
+  border-radius: var(--radius-sheet);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.par {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.parEstreito {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 96px;
+  gap: 12px;
+}
+
+/* Linha do botão Salvar, alinhada à coluna dos painéis */
+.rodapeForm {
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) minmax(0, 1.8fr);
+  gap: var(--gap);
+  max-width: 1152px;
+  padding-bottom: 32px;
+}
+
+.rodapeForm > * {
+  grid-column: 2;
+}
+
+.rodapeForm button {
+  justify-self: end;
+}
+
+.acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Rendimentos */
+.lista {
+  list-style: none;
+  padding: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: var(--row-height);
+  padding: 8px 12px;
+}
+
+.item + .item {
+  border-top: 1px solid var(--rule);
+}
+
+.empregador {
+  flex: 1;
+  min-width: 0;
+}
+
+.valor {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  padding: 0 12px;
+}
+
+.contagem {
+  color: var(--muted);
+  font-size: var(--fs-small);
+}
+
+.vazio {
+  color: var(--muted);
+}
+
+.formRendimento {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.acoesDialogo {
+  margin-top: 20px;
+}
+
+.edicao {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 140px;
+  gap: 12px;
+  flex: 1;
+}
+
+.icone {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.icone:hover {
+  background: var(--active);
+  color: var(--text);
+}
+
+.motivo {
+  color: var(--muted);
+}
+
+/* Estados da tela */
+.esqueleto {
+  height: 180px;
+  border-radius: var(--radius-sheet);
+  background: var(--raised);
+  margin-top: 32px;
+  max-width: 1152px;
+}
+
+.faixaErro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 10px 12px;
+  border-radius: var(--radius-control);
+  background: var(--status-reprovado-bg);
+  color: var(--status-reprovado-ink);
+}
+
+.textoDialogo {
+  color: var(--muted);
+}
+
+@media (max-width: 760px) {
+  .secao {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    padding: 24px 0;
+  }
+
+  .par,
+  .edicao {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rodapeForm {
+    grid-template-columns: minmax(0, 1fr);
+    padding-bottom: 24px;
+  }
+
+  .rodapeForm > * {
+    grid-column: 1;
+  }
+}

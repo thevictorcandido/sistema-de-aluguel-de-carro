@@ -1,0 +1,31 @@
+.area {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--text);
+  color: var(--surface);
+  border-radius: var(--radius-card);
+  padding: 10px 14px;
+  box-shadow: 0 4px 16px rgb(19 20 22 / 0.16);
+  animation: entrada 160ms ease-out;
+}
+
+@keyframes entrada {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (max-width: 760px) {
+  .area {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
+}
