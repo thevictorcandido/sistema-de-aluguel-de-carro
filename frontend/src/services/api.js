@@ -49,4 +49,10 @@ export const auth = {
 
 export const clientes = {
   cadastrar: (dados) => api.post('/clientes', dados),
+  meusDados: () => api.get('/clientes/me'),
+  atualizar: (dados) => api.put('/clientes/me', dados),
+  excluirConta: () => api.delete('/clientes/me'),
+  adicionarRendimento: (dados) => api.post('/clientes/me/rendimentos', dados),
+  atualizarRendimento: (id, dados) => api.put(`/clientes/me/rendimentos/${id}`, dados),
+  removerRendimento: (id) => api.delete(`/clientes/me/rendimentos/${id}`),
 }

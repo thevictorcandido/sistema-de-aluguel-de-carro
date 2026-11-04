@@ -4,6 +4,7 @@ import { SessaoProvider, useSessao } from './contexts/SessaoContext.jsx'
 import CriarConta from './pages/CriarConta/CriarConta.jsx'
 import EmConstrucao from './pages/EmConstrucao/EmConstrucao.jsx'
 import Entrar from './pages/Entrar/Entrar.jsx'
+import MeusDados from './pages/MeusDados/MeusDados.jsx'
 import NaoEncontrado from './pages/NaoEncontrado/NaoEncontrado.jsx'
 import { AGENTES, inicioDoPerfil } from './routes/menu.js'
 import RotaProtegida from './routes/RotaProtegida.jsx'
@@ -29,7 +30,7 @@ export function Rotas() {
               path="/pedidos/novo"
               element={<EmConstrucao titulo="Novo pedido" tarefa={5} />}
             />
-            <Route path="/meus-dados" element={<EmConstrucao titulo="Meus dados" tarefa={4} />} />
+            <Route path="/meus-dados" element={<MeusDados />} />
           </Route>
 
           <Route element={<RotaProtegida perfis={AGENTES} />}>

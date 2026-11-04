@@ -1,5 +1,28 @@
 import { describe, expect, it } from 'vitest'
-import { mascaraCep, mascaraCpf } from './formatos.js'
+import { formatarMoeda, lerMoeda, mascaraCep, mascaraCpf, moedaParaCampo } from './formatos.js'
+
+describe('moeda', () => {
+  it('formata em reais', () => {
+    expect(formatarMoeda(5500)).toBe('R$ 5.500,00'.replace(' ', ' '))
+  })
+
+  it('lê o valor digitado com ou sem separador de milhar', () => {
+    expect(lerMoeda('4.200,50')).toBe(4200.5)
+    expect(lerMoeda('4200,5')).toBe(4200.5)
+    expect(lerMoeda('4200.50')).toBe(4200.5)
+    expect(lerMoeda('R$ 1.300')).toBe(1300)
+  })
+
+  it('recusa texto que não é valor', () => {
+    expect(lerMoeda('')).toBeNull()
+    expect(lerMoeda('abc')).toBeNull()
+    expect(lerMoeda('10,999')).toBeNull()
+  })
+
+  it('volta o valor para o campo no formato de digitação', () => {
+    expect(moedaParaCampo(4200.5)).toBe('4200,50')
+  })
+})
 
 describe('mascaraCpf', () => {
   it('pontua enquanto digita', () => {

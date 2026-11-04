@@ -1,0 +1,20 @@
+.dialogo {
+  /* O reset de base.css zera margens; o <dialog> modal precisa da margem automática para centralizar */
+  margin: auto;
+  width: min(440px, calc(100vw - 32px));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sheet);
+  padding: var(--pad);
+  box-shadow: 0 12px 40px rgb(19 20 22 / 0.18);
+  color: var(--text);
+}
+
+.dialogo::backdrop {
+  background: rgb(19 20 22 / 0.35);
+}
+
+.titulo {
+  font-size: var(--fs-section);
+  font-weight: 600;
+  margin-bottom: 8px;
+}

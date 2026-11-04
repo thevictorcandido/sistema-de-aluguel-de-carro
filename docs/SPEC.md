@@ -116,7 +116,7 @@ As transições ficam em métodos de `PedidoAluguel`, como no diagrama de classe
 - Data de fim igual ou posterior à de início; início a partir de hoje.
 - No máximo 3 rendimentos por cliente, conferido no serviço.
 - Login, CPF, RG, matrícula e placa únicos.
-- Cliente com pedido em `ENVIADO`, `EM_ANALISE` ou `APROVADO` não pode ser excluído.
+- Cliente com pedido em `ENVIADO`, `EM_ANALISE` ou `APROVADO` não pode ser excluído. Com pedido `CONTRATADO` também não, porque o contrato e o proprietário do automóvel precisam ficar no histórico. Ao excluir, os pedidos `CANCELADO` e `REPROVADO` são apagados junto. A tela mostra o motivo antes de a pessoa tentar.
 - Contrato `PROPRIEDADE_BANCO` só por banco, e com crédito obrigatório. Os outros tipos aceitam crédito opcional de banco.
 - Ao contratar, o proprietário do automóvel muda conforme o tipo do contrato (US11).
 
@@ -164,4 +164,5 @@ O GitHub Actions roda `mvn verify`, `vitest` e Biome em cada PR. O Playwright ro
 
 | Data | Decisão | Motivo |
 |---|---|---|
+| 2026-11-04 | Exclusão de cliente bloqueada também por contrato executado | O enunciado só fala em pedido ativo, mas apagar o cliente apagaria o contrato e o registro de propriedade do automóvel |
 | 2026-11-04 | Sem pacote `dto`; classe principal em `application` e `SecurityConfig` em `config` | Seguir a organização usada nas aulas e na prova (CandidatosTSE_2, BD_RestAPI_PostgreSQL, JWT_RestAPI). As classes de entrada e saída ficam em `model`, como o `LoginRequest` do JWT_RestAPI, e nunca levam o hash da senha |
