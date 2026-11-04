@@ -225,7 +225,7 @@ cd backend
 ./mvnw verify
 ```
 
-JUnit 5 e MockMvc, com o banco H2. Cobrem todas as transições do ciclo do pedido, o limite de 3 rendimentos e as migrações com os dados iniciais.
+JUnit 5 e MockMvc, com o banco H2. Cobrem todas as transições do ciclo do pedido, as regras de contrato e crédito, as permissões de cada perfil e as migrações com os dados iniciais.
 
 ### Front-end
 
@@ -235,7 +235,17 @@ npm test
 npm run lint
 ```
 
-Vitest com Testing Library, e Biome para formatação e lint. Os testes ponta a ponta com Playwright entram na tarefa 11 do plano.
+Vitest com Testing Library, e Biome para formatação e lint.
+
+### Ponta a ponta
+
+```bash
+cd frontend
+npx playwright install chromium firefox
+npm run e2e
+```
+
+Playwright no Chrome e no Firefox. O comando sobe uma API própria na porta 8091 (perfil `local`, H2 em memória) e um Vite na 5181, sem esbarrar nos servidores de desenvolvimento. Os testes cobrem o fluxo do enunciado: cadastro, login, pedido, análise, aprovação e contrato; reprovação, modificação e cancelamento; e o acesso de cada perfil. A primeira linha só é necessária na primeira vez, para baixar os navegadores.
 
 ---
 

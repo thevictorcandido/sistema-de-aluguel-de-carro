@@ -1,6 +1,9 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
+// Porta da API para o proxy. Os testes ponta a ponta sobem uma API própria em outra porta.
+const portaApi = process.env.API_PORT ?? '8080'
+
 export default defineConfig({
   plugins: [react()],
   server: {
@@ -11,11 +14,13 @@ export default defineConfig({
     strictPort: true,
     // Mesma origem para front e API durante o desenvolvimento, sem CORS
     proxy: {
-      '/api': 'http://127.0.0.1:8080',
+      '/api': `http://127.0.0.1:${portaApi}`,
     },
   },
   test: {
     environment: 'jsdom',
     setupFiles: './src/test/setup.js',
+    // Os testes ponta a ponta ficam em e2e/ e rodam pelo Playwright
+    include: ['src/**/*.test.{js,jsx}'],
   },
 })

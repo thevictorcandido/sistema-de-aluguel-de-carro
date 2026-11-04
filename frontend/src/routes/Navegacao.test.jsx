@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { MARINA, ROTA_SUL, simularApi } from '../test/apiFalsa.js'
 import { renderizarEm } from '../test/renderizar.jsx'
-import { itemAtivo, MENU } from './menu.js'
+import { destinoDepoisDoLogin, itemAtivo, MENU } from './menu.js'
 
 describe('itemAtivo', () => {
   it('escolhe o caminho mais longo que é prefixo do endereço', () => {
@@ -12,6 +12,19 @@ describe('itemAtivo', () => {
     expect(itemAtivo(MENU.CLIENTE, '/pedidos/9').rotulo).toBe('Meus pedidos')
     expect(itemAtivo(MENU.EMPRESA, '/fila/3/modificar').rotulo).toBe('Fila de pedidos')
     expect(itemAtivo(MENU.EMPRESA, '/filas')).toBeUndefined()
+  })
+})
+
+describe('destinoDepoisDoLogin', () => {
+  it('volta para a tela pedida quando ela é do perfil que entrou', () => {
+    expect(destinoDepoisDoLogin('CLIENTE', '/pedidos/9')).toBe('/pedidos/9')
+    expect(destinoDepoisDoLogin('BANCO', '/fila/3')).toBe('/fila/3')
+  })
+
+  it('vai para o início do perfil quando a tela pedida é de outro perfil', () => {
+    expect(destinoDepoisDoLogin('EMPRESA', '/pedidos/9')).toBe('/fila')
+    expect(destinoDepoisDoLogin('CLIENTE', '/automoveis')).toBe('/pedidos')
+    expect(destinoDepoisDoLogin('CLIENTE', undefined)).toBe('/pedidos')
   })
 })
 

@@ -33,6 +33,9 @@ public class SecurityConfig {
 				.sessionManagement(sessao -> sessao.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(rotas -> rotas
 						.requestMatchers("/api/health", "/api/auth/login", "/api/auth/logout").permitAll()
+						// Página de erro do Spring: um 403 ou 404 é encaminhado para /error, onde o JWT não é lido de
+						// novo. Sem liberar, a resposta virava 401 e o front tratava como sessão vencida.
+						.requestMatchers("/error").permitAll()
 						.requestMatchers(HttpMethod.POST, "/api/clientes").permitAll()
 						.requestMatchers("/api/clientes/me/**").hasRole("CLIENTE")
 						.requestMatchers(HttpMethod.POST, "/api/pedidos", "/api/pedidos/*/cancelar").hasRole("CLIENTE")
