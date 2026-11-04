@@ -35,7 +35,7 @@ public class SecurityConfig {
 						.requestMatchers("/api/health", "/api/auth/login", "/api/auth/logout").permitAll()
 						.requestMatchers(HttpMethod.POST, "/api/clientes").permitAll()
 						.requestMatchers("/api/clientes/me/**").hasRole("CLIENTE")
-						.requestMatchers(HttpMethod.POST, "/api/pedidos").hasRole("CLIENTE")
+						.requestMatchers(HttpMethod.POST, "/api/pedidos", "/api/pedidos/*/cancelar").hasRole("CLIENTE")
 						.requestMatchers("/api/contratos/**").hasAnyRole(AGENTES)
 						.requestMatchers(HttpMethod.POST, "/api/automoveis/**").hasAnyRole(AGENTES)
 						.requestMatchers(HttpMethod.PUT, "/api/automoveis/**").hasAnyRole(AGENTES)

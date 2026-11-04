@@ -31,6 +31,7 @@ export function Rotas() {
             <Route path="/pedidos" element={<MeusPedidos />} />
             <Route path="/pedidos/novo" element={<NovoPedido />} />
             <Route path="/pedidos/:id" element={<DetalhePedido />} />
+            <Route path="/pedidos/:id/modificar" element={<NovoPedido />} />
             <Route path="/meus-dados" element={<MeusDados />} />
           </Route>
 

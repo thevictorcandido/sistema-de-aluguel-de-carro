@@ -115,7 +115,8 @@ public class PedidoAluguel {
 		}
 	}
 
-	private void exigirAlteravel(String acao) {
+	/** Recusa a ação quando o pedido já foi contratado ou cancelado. */
+	public void exigirAlteravel(String acao) {
 		if (!status.permiteAlteracao()) {
 			throw new RegraNegocioException("Um pedido " + status.name().toLowerCase() + " não pode ser " + acao + ".");
 		}

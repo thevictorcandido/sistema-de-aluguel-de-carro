@@ -65,4 +65,6 @@ export const pedidos = {
   criar: (dados) => api.post('/pedidos', dados),
   listar: () => api.get('/pedidos'),
   buscar: (id) => api.get(`/pedidos/${id}`),
+  modificar: (id, dados) => api.put(`/pedidos/${id}`, dados),
+  cancelar: (id) => api.post(`/pedidos/${id}/cancelar`),
 }
