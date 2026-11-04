@@ -1,0 +1,138 @@
+@startuml classes
+title Sistema de Aluguel de Carros - Diagrama de Classes (v2)
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+hide empty members
+
+abstract class Usuario {
+  - id: Long
+  - login: String
+  - senhaHash: String
+  + {abstract} getPerfil(): Perfil
+  + {abstract} getNome(): String
+}
+
+class Cliente {
+  - rg: String
+  - cpf: String
+  - nome: String
+  - profissao: String
+  + adicionarRendimento(r: Rendimento): void
+  + getRendaMensal(): BigDecimal
+}
+
+class Endereco <<embeddable>> {
+  - logradouro: String
+  - numero: String
+  - complemento: String
+  - bairro: String
+  - cidade: String
+  - uf: String
+  - cep: String
+}
+
+class Rendimento {
+  - id: Long
+  - entidadeEmpregadora: String
+  - valor: BigDecimal
+}
+
+abstract class Agente {
+  - nome: String
+  - cnpj: String
+}
+
+class Empresa
+class Banco {
+  + concederCredito(contrato: Contrato, valor: BigDecimal, taxaJuros: BigDecimal, parcelas: int): ContratoCredito
+}
+
+class Automovel {
+  - id: Long
+  - matricula: String
+  - ano: int
+  - marca: String
+  - modelo: String
+  - placa: String
+  - valorDiaria: BigDecimal
+  + registrarProprietario(novo: Usuario): void
+}
+
+class PedidoAluguel {
+  - id: Long
+  - dataCriacao: LocalDateTime
+  - dataInicio: LocalDate
+  - dataFim: LocalDate
+  - status: StatusPedido
+  + modificar(automovel: Automovel, inicio: LocalDate, fim: LocalDate): void
+  + iniciarAnalise(): void
+  + registrarParecer(parecer: Parecer): void
+  + cancelar(): void
+  + contratar(): void
+  + getValorTotal(): BigDecimal
+}
+
+class Parecer {
+  - id: Long
+  - positivo: boolean
+  - justificativa: String
+  - data: LocalDateTime
+}
+
+class Contrato {
+  - id: Long
+  - tipo: TipoContrato
+  - dataAssinatura: LocalDate
+}
+
+class ContratoCredito {
+  - id: Long
+  - valor: BigDecimal
+  - taxaJuros: BigDecimal
+  - parcelas: int
+}
+
+enum Perfil {
+  CLIENTE
+  EMPRESA
+  BANCO
+}
+
+enum StatusPedido {
+  ENVIADO
+  EM_ANALISE
+  APROVADO
+  REPROVADO
+  CONTRATADO
+  CANCELADO
+  + permiteAlteracao(): boolean
+  + ativo(): boolean
+}
+
+enum TipoContrato {
+  PROPRIEDADE_CLIENTE
+  PROPRIEDADE_EMPRESA
+  PROPRIEDADE_BANCO
+}
+
+Usuario <|-- Cliente
+Usuario <|-- Agente
+Agente <|-- Empresa
+Agente <|-- Banco
+
+Cliente *-- "1" Endereco
+Cliente "1" *-- "0..3" Rendimento
+Cliente "1" -- "0..*" PedidoAluguel : solicita >
+PedidoAluguel "0..*" --> "1" Automovel : refere-se a
+Automovel "0..*" --> "1" Usuario : proprietário
+PedidoAluguel "1" *-- "0..1" Parecer
+Parecer "0..*" --> "1" Agente : emitido por
+PedidoAluguel "1" -- "0..1" Contrato : origina >
+Contrato "0..*" --> "1" Agente : executado por
+Contrato "1" -- "0..1" ContratoCredito : financiado por >
+ContratoCredito "0..*" --> "1" Banco : concedido por
+
+Usuario ..> Perfil
+PedidoAluguel ..> StatusPedido
+Contrato ..> TipoContrato
+@enduml

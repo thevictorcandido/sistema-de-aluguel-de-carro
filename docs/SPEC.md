@@ -129,13 +129,15 @@ Para mostrar a renda comprometida na análise, como o DESIGN.md propõe:
 
 ## Mudanças no modelo para a v2 dos diagramas
 
-A nota olha o alinhamento entre modelo e código. Cada mudança abaixo entra em `docs/uml/v2` na mesma tarefa que a implementa.
+A nota olha o alinhamento entre modelo e código. Cada mudança abaixo entra em `docs/uml/v2` na mesma tarefa que a implementa. As da tarefa 2 já estão no diagrama v2.
 
 | Classe | Mudança | Motivo |
 |---|---|---|
 | `Automovel` | `+ valorDiaria: BigDecimal` | Valor do pedido e renda comprometida |
 | `PedidoAluguel` | `+ getValorTotal(): BigDecimal` | Idem |
 | `Cliente` | `+ getRendaMensal(): BigDecimal` | Idem |
+| `Usuario` | `+ getNome(): String`, abstrato | Nome do cliente, da empresa ou do banco nas telas |
+| `StatusPedido` | `+ permiteAlteracao()` e `+ ativo()` | Regras de modificar, cancelar e excluir cliente num lugar só |
 
 ## Testes e qualidade
 

@@ -103,7 +103,7 @@ Durante o desenvolvimento, o Vite repassa as chamadas a `/api` para o Spring Boo
 
 | Diagrama de Pacotes | Diagrama de Classes |
 | :---: | :---: |
-| <img src="docs/uml/v1/pacotes.svg" alt="Diagrama de pacotes" width="380px"> | <img src="docs/uml/v1/classes.svg" alt="Diagrama de classes" width="380px"> |
+| <img src="docs/uml/v1/pacotes.svg" alt="Diagrama de pacotes" width="380px"> | <img src="docs/uml/v2/classes.svg" alt="Diagrama de classes" width="380px"> |
 
 Detalhes das camadas, rotas da API e regras de negócio em [docs/SPEC.md](docs/SPEC.md).
 
@@ -153,7 +153,18 @@ O back-end baixa as dependências na primeira execução do `mvnw`.
 
 ### 💾 Inicialização do Banco de Dados
 
-As tabelas e os dados iniciais são criados pelo Flyway quando a API sobe, tanto no H2 quanto no Supabase. Nenhum passo manual é necessário.
+As tabelas e os dados iniciais são criados pelo Flyway quando a API sobe, tanto no H2 quanto no Supabase, a partir de `backend/src/main/resources/db/migration`. Nenhum passo manual é necessário.
+
+Usuários de teste, todos com a senha `senha123` e dados fictícios:
+
+| Login | Perfil | Nome |
+| :--- | :--- | :--- |
+| `marina` | Cliente | Marina Costa |
+| `joao` | Cliente | João Ferreira |
+| `rotasul` | Empresa | Locadora Rota Sul |
+| `vialeste` | Empresa | Locadora Via Leste |
+| `horizonte` | Banco | Banco Horizonte |
+| `confianca` | Banco | Banco Confiança |
 
 ### ⚡ Como Executar a Aplicação
 
@@ -184,6 +195,9 @@ O front-end fica em **http://127.0.0.1:5173**. Se a porta 5173 estiver ocupada, 
 ├── backend/                 # API Spring Boot
 │   ├── src/main/java/br/com/aluguelcarros/
 │   │   ├── controller/      # Rotas REST
+│   │   ├── exception/       # Erros de regra de negócio
+│   │   ├── model/           # Entidades JPA e enums
+│   │   ├── repository/      # Spring Data JPA
 │   │   └── security/        # Configuração do Spring Security
 │   └── src/main/resources/  # Perfis e migrações do Flyway
 ├── frontend/                # React + Vite
@@ -210,7 +224,7 @@ cd backend
 ./mvnw verify
 ```
 
-JUnit 5 e MockMvc, com o banco H2.
+JUnit 5 e MockMvc, com o banco H2. Cobrem todas as transições do ciclo do pedido, o limite de 3 rendimentos e as migrações com os dados iniciais.
 
 ### Front-end
 
