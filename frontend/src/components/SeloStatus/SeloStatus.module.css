@@ -1,0 +1,40 @@
+.selo {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: var(--fs-small);
+  font-weight: 500;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.enviado {
+  background: var(--status-enviado-bg);
+  color: var(--status-enviado-ink);
+}
+
+.analise {
+  background: var(--status-analise-bg);
+  color: var(--status-analise-ink);
+}
+
+.aprovado {
+  background: var(--status-aprovado-bg);
+  color: var(--status-aprovado-ink);
+}
+
+.reprovado {
+  background: var(--status-reprovado-bg);
+  color: var(--status-reprovado-ink);
+}
+
+.contratado {
+  background: var(--status-contratado-bg);
+  color: var(--status-contratado-ink);
+}
+
+.cancelado {
+  border: 1px solid var(--control);
+  color: var(--muted);
+  padding: 1px 7px;
+}

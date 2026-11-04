@@ -159,6 +159,7 @@ O GitHub Actions roda `mvn verify`, `vitest` e Biome em cada PR. O Playwright ro
 | 1 | Limite de tentativas de login | Fora do escopo, por não haver deploy; registrar no README |
 | 2 | Backup do Supabase | O plano gratuito não guarda backups; as migrações e os dados iniciais recriam o banco |
 | 3 | Valor da diária e referência de 30% | Valores de exemplo nos dados iniciais, mostrados ao professor junto com a v2 |
+| 4 | Dois pedidos do mesmo automóvel no mesmo período | O enunciado não fala de disponibilidade. Por ora, o sistema aceita os dois pedidos, e a análise do agente decide. Se o professor pedir, a regra entra na criação e na contratação |
 
 ## Decisões
 

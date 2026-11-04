@@ -2,10 +2,13 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import Moldura from './components/Moldura/Moldura.jsx'
 import { SessaoProvider, useSessao } from './contexts/SessaoContext.jsx'
 import CriarConta from './pages/CriarConta/CriarConta.jsx'
+import DetalhePedido from './pages/DetalhePedido/DetalhePedido.jsx'
 import EmConstrucao from './pages/EmConstrucao/EmConstrucao.jsx'
 import Entrar from './pages/Entrar/Entrar.jsx'
 import MeusDados from './pages/MeusDados/MeusDados.jsx'
+import MeusPedidos from './pages/MeusPedidos/MeusPedidos.jsx'
 import NaoEncontrado from './pages/NaoEncontrado/NaoEncontrado.jsx'
+import NovoPedido from './pages/NovoPedido/NovoPedido.jsx'
 import { AGENTES, inicioDoPerfil } from './routes/menu.js'
 import RotaProtegida from './routes/RotaProtegida.jsx'
 
@@ -25,11 +28,9 @@ export function Rotas() {
           <Route index element={<Inicio />} />
 
           <Route element={<RotaProtegida perfis={['CLIENTE']} />}>
-            <Route path="/pedidos" element={<EmConstrucao titulo="Meus pedidos" tarefa={5} />} />
-            <Route
-              path="/pedidos/novo"
-              element={<EmConstrucao titulo="Novo pedido" tarefa={5} />}
-            />
+            <Route path="/pedidos" element={<MeusPedidos />} />
+            <Route path="/pedidos/novo" element={<NovoPedido />} />
+            <Route path="/pedidos/:id" element={<DetalhePedido />} />
             <Route path="/meus-dados" element={<MeusDados />} />
           </Route>
 

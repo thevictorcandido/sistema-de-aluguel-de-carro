@@ -1,0 +1,40 @@
+.placa {
+  display: inline-grid;
+  grid-template-rows: 6px auto;
+  border: 1px solid var(--text);
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--surface);
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.placa::before {
+  content: "";
+  background: var(--placa-azul);
+}
+
+.placa b {
+  font: 600 13px / 1 var(--font-mono);
+  letter-spacing: 0.04em;
+  padding: 3px 7px 4px;
+}
+
+.grande {
+  grid-template-rows: 14px auto;
+  border-width: 2px;
+  border-radius: 6px;
+}
+
+.grande::before {
+  content: "BRASIL";
+  color: #fff;
+  font: 600 8px / 14px var(--font-sans);
+  text-align: center;
+  letter-spacing: 0.2em;
+}
+
+.grande b {
+  font-size: 30px;
+  padding: 6px 16px 8px;
+}

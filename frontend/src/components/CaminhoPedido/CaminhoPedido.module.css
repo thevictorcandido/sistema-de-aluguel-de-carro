@@ -1,0 +1,37 @@
+.caminho {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin-top: 14px;
+}
+
+.caminho li {
+  flex: 1;
+  padding: 10px 12px 0 0;
+  border-top: 3px solid var(--active);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.caminho small {
+  display: block;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.caminho .feito {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+.caminho .atual {
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.caminho .encerrado {
+  border-color: var(--negative);
+  color: var(--status-reprovado-ink);
+  font-weight: 600;
+}

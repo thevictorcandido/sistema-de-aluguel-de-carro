@@ -69,3 +69,36 @@ export const UFS = [
   'SP',
   'TO',
 ]
+
+// Datas da API chegam como "2026-11-10" ou "2026-11-03T14:20:00"; a tela mostra 10/11/2026.
+// Lidas como texto, sem passar por Date, para o fuso não mudar o dia.
+export function formatarData(iso) {
+  if (!iso) {
+    return ''
+  }
+  const [ano, mes, dia] = iso.slice(0, 10).split('-')
+  return `${dia}/${mes}/${ano}`
+}
+
+// Período curto da tabela: 10/11 a 19/11. Com anos diferentes, mostra as datas completas.
+export function formatarPeriodo(inicio, fim) {
+  if (inicio.slice(0, 4) !== fim.slice(0, 4)) {
+    return `${formatarData(inicio)} a ${formatarData(fim)}`
+  }
+  return `${formatarData(inicio).slice(0, 5)} a ${formatarData(fim).slice(0, 5)}`
+}
+
+// Data de hoje no formato do campo de data, no fuso do navegador.
+export function hojeIso(agora = new Date()) {
+  const local = new Date(agora.getTime() - agora.getTimezoneOffset() * 60000)
+  return local.toISOString().slice(0, 10)
+}
+
+// Diárias contando o dia de início e o de fim, como a API calcula.
+export function contarDiarias(inicio, fim) {
+  if (!inicio || !fim || fim < inicio) {
+    return 0
+  }
+  const dia = 24 * 60 * 60 * 1000
+  return Math.round((Date.parse(fim) - Date.parse(inicio)) / dia) + 1
+}

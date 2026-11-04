@@ -12,6 +12,8 @@ public interface PedidoAluguelRepository extends JpaRepository<PedidoAluguel, Lo
 
 	List<PedidoAluguel> findByClienteIdOrderByDataCriacaoDesc(Long clienteId);
 
+	List<PedidoAluguel> findAllByOrderByDataCriacaoAsc();
+
 	boolean existsByClienteIdAndStatusIn(Long clienteId, Collection<StatusPedido> status);
 
 	void deleteByClienteId(Long clienteId);

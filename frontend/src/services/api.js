@@ -56,3 +56,13 @@ export const clientes = {
   atualizarRendimento: (id, dados) => api.put(`/clientes/me/rendimentos/${id}`, dados),
   removerRendimento: (id) => api.delete(`/clientes/me/rendimentos/${id}`),
 }
+
+export const automoveis = {
+  listar: () => api.get('/automoveis'),
+}
+
+export const pedidos = {
+  criar: (dados) => api.post('/pedidos', dados),
+  listar: () => api.get('/pedidos'),
+  buscar: (id) => api.get(`/pedidos/${id}`),
+}
