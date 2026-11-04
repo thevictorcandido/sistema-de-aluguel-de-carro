@@ -1,10 +1,12 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import Moldura from './components/Moldura/Moldura.jsx'
 import { SessaoProvider, useSessao } from './contexts/SessaoContext.jsx'
+import AnalisePedido from './pages/AnalisePedido/AnalisePedido.jsx'
 import CriarConta from './pages/CriarConta/CriarConta.jsx'
 import DetalhePedido from './pages/DetalhePedido/DetalhePedido.jsx'
 import EmConstrucao from './pages/EmConstrucao/EmConstrucao.jsx'
 import Entrar from './pages/Entrar/Entrar.jsx'
+import FilaPedidos from './pages/FilaPedidos/FilaPedidos.jsx'
 import MeusDados from './pages/MeusDados/MeusDados.jsx'
 import MeusPedidos from './pages/MeusPedidos/MeusPedidos.jsx'
 import NaoEncontrado from './pages/NaoEncontrado/NaoEncontrado.jsx'
@@ -36,7 +38,9 @@ export function Rotas() {
           </Route>
 
           <Route element={<RotaProtegida perfis={AGENTES} />}>
-            <Route path="/fila" element={<EmConstrucao titulo="Fila de pedidos" tarefa={7} />} />
+            <Route path="/fila" element={<FilaPedidos />} />
+            <Route path="/fila/:id" element={<AnalisePedido />} />
+            <Route path="/fila/:id/modificar" element={<NovoPedido />} />
             <Route path="/contratos" element={<EmConstrucao titulo="Contratos" tarefa={8} />} />
             <Route path="/automoveis" element={<EmConstrucao titulo="Automóveis" tarefa={9} />} />
           </Route>

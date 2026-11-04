@@ -10,12 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.aluguelcarros.exception.CampoInvalidoException;
 import br.com.aluguelcarros.exception.RecursoNaoEncontradoException;
+import br.com.aluguelcarros.model.Agente;
 import br.com.aluguelcarros.model.Automovel;
 import br.com.aluguelcarros.model.Cliente;
 import br.com.aluguelcarros.model.NovoPedidoRequest;
+import br.com.aluguelcarros.model.Parecer;
+import br.com.aluguelcarros.model.ParecerRequest;
 import br.com.aluguelcarros.model.PedidoAluguel;
 import br.com.aluguelcarros.model.PedidoResponse;
 import br.com.aluguelcarros.model.Perfil;
+import br.com.aluguelcarros.repository.AgenteRepository;
 import br.com.aluguelcarros.repository.AutomovelRepository;
 import br.com.aluguelcarros.repository.ClienteRepository;
 import br.com.aluguelcarros.repository.PedidoAluguelRepository;
@@ -27,13 +31,15 @@ public class PedidoService {
 	private final PedidoAluguelRepository pedidos;
 	private final ClienteRepository clientes;
 	private final AutomovelRepository automoveis;
+	private final AgenteRepository agentes;
 	private final Clock relogio;
 
 	public PedidoService(PedidoAluguelRepository pedidos, ClienteRepository clientes, AutomovelRepository automoveis,
-			Clock relogio) {
+			AgenteRepository agentes, Clock relogio) {
 		this.pedidos = pedidos;
 		this.clientes = clientes;
 		this.automoveis = automoveis;
+		this.agentes = agentes;
 		this.relogio = relogio;
 	}
 
@@ -72,7 +78,7 @@ public class PedidoService {
 		validarPeriodo(dados.dataInicio(), dados.dataFim());
 		pedido.modificar(automovel, dados.dataInicio(), dados.dataFim());
 		pedidos.flush();
-		return PedidoResponse.de(pedido);
+		return visao(usuario, pedido);
 	}
 
 	/** US08: só o dono cancela, e só antes de contratado. O pedido continua no histórico. */
@@ -83,10 +89,34 @@ public class PedidoService {
 		return PedidoResponse.de(pedido);
 	}
 
-	/** US06: pedido de outro cliente responde 404, para não revelar que existe. */
+	/** US06: pedido de outro cliente responde 404, para não revelar que existe. O agente recebe a ficha financeira. */
 	@Transactional(readOnly = true)
 	public PedidoResponse buscar(UsuarioAutenticado usuario, Long pedidoId) {
-		return PedidoResponse.de(buscarVisivel(usuario, pedidoId));
+		return visao(usuario, buscarVisivel(usuario, pedidoId));
+	}
+
+	/** US10: o agente abre a análise de um pedido que aguarda; o status passa a EM_ANALISE. */
+	@Transactional
+	public PedidoResponse abrirAnalise(UsuarioAutenticado usuario, Long pedidoId) {
+		PedidoAluguel pedido = buscarVisivel(usuario, pedidoId);
+		pedido.iniciarAnalise();
+		return PedidoResponse.paraAgente(pedido);
+	}
+
+	/** US10: o parecer guarda agente, resultado, justificativa e data; favorável aprova, desfavorável reprova. */
+	@Transactional
+	public PedidoResponse registrarParecer(UsuarioAutenticado usuario, Long pedidoId, ParecerRequest dados) {
+		PedidoAluguel pedido = buscarVisivel(usuario, pedidoId);
+		Agente agente = agentes.findById(usuario.id())
+				.orElseThrow(() -> new RecursoNaoEncontradoException("Agente não encontrado."));
+		pedido.registrarParecer(new Parecer(agente, dados.positivo(), dados.justificativa().trim(),
+				LocalDateTime.now(relogio)));
+		pedidos.flush();
+		return PedidoResponse.paraAgente(pedido);
+	}
+
+	private static PedidoResponse visao(UsuarioAutenticado usuario, PedidoAluguel pedido) {
+		return usuario.perfil() == Perfil.CLIENTE ? PedidoResponse.de(pedido) : PedidoResponse.paraAgente(pedido);
 	}
 
 	PedidoAluguel buscarVisivel(UsuarioAutenticado usuario, Long pedidoId) {

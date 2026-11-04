@@ -67,4 +67,6 @@ export const pedidos = {
   buscar: (id) => api.get(`/pedidos/${id}`),
   modificar: (id, dados) => api.put(`/pedidos/${id}`, dados),
   cancelar: (id) => api.post(`/pedidos/${id}/cancelar`),
+  abrirAnalise: (id) => api.post(`/pedidos/${id}/analise`),
+  registrarParecer: (id, dados) => api.post(`/pedidos/${id}/parecer`, dados),
 }
