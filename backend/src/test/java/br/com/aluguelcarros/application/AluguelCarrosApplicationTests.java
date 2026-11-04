@@ -1,4 +1,4 @@
-package br.com.aluguelcarros;
+package br.com.aluguelcarros.application;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

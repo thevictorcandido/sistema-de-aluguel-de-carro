@@ -97,13 +97,13 @@ O automóvel pode ficar registrado como propriedade do cliente, da empresa ou do
 O sistema segue o MVC com dois subsistemas, como pede o enunciado:
 
 - **Construção dinâmica das páginas web** (`frontend/`): o React faz o papel de View e consome a API em JSON.
-- **Gestão de pedidos e contratos** (`backend/`): `controller` é o Controller; `service`, `repository` e `model` formam o Model.
+- **Gestão de pedidos e contratos** (`backend/`): `controller` é o Controller; `service`, `repository` e `model` formam o Model. Os pacotes seguem a organização usada na disciplina, com a classe principal em `application` e sem pacote `dto`.
 
 Durante o desenvolvimento, o Vite repassa as chamadas a `/api` para o Spring Boot. Front e API ficam na mesma origem, sem necessidade de CORS.
 
 | Diagrama de Pacotes | Diagrama de Classes |
 | :---: | :---: |
-| <img src="docs/uml/v1/pacotes.svg" alt="Diagrama de pacotes" width="380px"> | <img src="docs/uml/v1/classes.svg" alt="Diagrama de classes" width="380px"> |
+| <img src="docs/uml/v2/pacotes.svg" alt="Diagrama de pacotes" width="380px"> | <img src="docs/uml/v2/classes.svg" alt="Diagrama de classes" width="380px"> |
 
 Detalhes das camadas, rotas da API e regras de negócio em [docs/SPEC.md](docs/SPEC.md).
 
@@ -153,7 +153,18 @@ O back-end baixa as dependências na primeira execução do `mvnw`.
 
 ### 💾 Inicialização do Banco de Dados
 
-As tabelas e os dados iniciais são criados pelo Flyway quando a API sobe, tanto no H2 quanto no Supabase. Nenhum passo manual é necessário.
+As tabelas e os dados iniciais são criados pelo Flyway quando a API sobe, tanto no H2 quanto no Supabase, a partir de `backend/src/main/resources/db/migration`. Nenhum passo manual é necessário.
+
+Usuários de teste, todos com a senha `senha123` e dados fictícios:
+
+| Login | Perfil | Nome |
+| :--- | :--- | :--- |
+| `marina` | Cliente | Marina Costa |
+| `joao` | Cliente | João Ferreira |
+| `rotasul` | Empresa | Locadora Rota Sul |
+| `vialeste` | Empresa | Locadora Via Leste |
+| `horizonte` | Banco | Banco Horizonte |
+| `confianca` | Banco | Banco Confiança |
 
 ### ⚡ Como Executar a Aplicação
 
@@ -183,8 +194,12 @@ O front-end fica em **http://127.0.0.1:5173**. Se a porta 5173 estiver ocupada, 
 .
 ├── backend/                 # API Spring Boot
 │   ├── src/main/java/br/com/aluguelcarros/
+│   │   ├── application/     # Classe principal
+│   │   ├── config/          # Configuração do Spring Security
 │   │   ├── controller/      # Rotas REST
-│   │   └── security/        # Configuração do Spring Security
+│   │   ├── exception/       # Erros de regra de negócio
+│   │   ├── model/           # Entidades JPA, enums e classes de entrada e saída da API
+│   │   └── repository/      # Spring Data JPA
 │   └── src/main/resources/  # Perfis e migrações do Flyway
 ├── frontend/                # React + Vite
 │   └── src/
@@ -210,7 +225,7 @@ cd backend
 ./mvnw verify
 ```
 
-JUnit 5 e MockMvc, com o banco H2.
+JUnit 5 e MockMvc, com o banco H2. Cobrem todas as transições do ciclo do pedido, o limite de 3 rendimentos e as migrações com os dados iniciais.
 
 ### Front-end
 
