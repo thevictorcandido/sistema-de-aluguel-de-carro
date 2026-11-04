@@ -49,3 +49,11 @@
   --font-sans: "IBM Plex Sans", Inter, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
+
+/* Em tela de toque, todo controle chega a 44px de altura, o alvo mínimo para o dedo */
+@media (pointer: coarse) {
+  :root {
+    --control-height: 44px;
+    --field-height: 44px;
+  }
+}

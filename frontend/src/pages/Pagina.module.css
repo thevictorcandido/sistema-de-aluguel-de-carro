@@ -17,5 +17,8 @@
 }
 
 .acoes a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-height);
   text-decoration: none;
 }

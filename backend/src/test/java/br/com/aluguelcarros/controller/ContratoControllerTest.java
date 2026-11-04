@@ -161,6 +161,17 @@ class ContratoControllerTest {
 	}
 
 	@Test
+	void empresaNaoTomaOCarroDeOutraEmpresa() throws Exception {
+		// O Onix é da Locadora Rota Sul; a Via Leste não pode ficar com ele pelo contrato
+		executar("vialeste", pedidoDaMarina(true), "PROPRIEDADE_EMPRESA", null)
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.campos.tipo")
+						.value("Só a empresa dona do automóvel fica proprietária pelo contrato."));
+
+		assertThat(proprietarioDoOnix()).isEqualTo("Locadora Rota Sul");
+	}
+
+	@Test
 	void soPedidoAprovadoEContratadoUmaVez() throws Exception {
 		executar("rotasul", pedidoDaMarina(false), "PROPRIEDADE_EMPRESA", null)
 				.andExpect(status().isConflict())

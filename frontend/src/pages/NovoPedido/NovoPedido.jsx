@@ -148,53 +148,56 @@ export default function NovoPedido() {
           )}
         </fieldset>
 
-        <aside className={styles.resumo} aria-labelledby="titulo-resumo">
-          <h2 id="titulo-resumo">Período e valor</h2>
-          <Campo
-            rotulo="Início"
-            type="date"
-            min={hoje}
-            value={dataInicio}
-            onChange={(e) => setDataInicio(e.target.value)}
-            erro={erros.dataInicio}
-          />
-          <Campo
-            rotulo="Fim"
-            type="date"
-            min={dataInicio || hoje}
-            value={dataFim}
-            onChange={(e) => setDataFim(e.target.value)}
-            erro={erros.dataFim}
-          />
-          {total !== null ? (
-            <div className={styles.conta} aria-live="polite">
-              <span className={styles.ajuda}>
-                {diarias} {diarias === 1 ? 'diária' : 'diárias'} de{' '}
-                {formatarMoeda(escolhido.valorDiaria)}
-              </span>
-              <span className={styles.total}>{formatarMoeda(total)}</span>
-            </div>
-          ) : (
-            <p className={styles.ajuda}>
-              {escolhido ? 'Informe as datas para ver o valor.' : 'Escolha um automóvel.'}
-            </p>
-          )}
-          {descartaParecer && (
-            <p className={styles.alerta}>
-              Este pedido já tem parecer. Ao salvar, o parecer é descartado e o pedido volta para
-              análise.
-            </p>
-          )}
-          <Aviso>{erroGeral}</Aviso>
-          <Botao variante="principal" type="submit" disabled={enviando}>
-            {enviando ? 'Salvando…' : modificando ? 'Salvar alterações' : 'Enviar pedido'}
-          </Botao>
-          {modificando && (
-            <Link className={styles.linkSecundario} to={`${base}/${id}`}>
-              Voltar sem alterar
-            </Link>
-          )}
-        </aside>
+        {/* Só aparece com a lista pronta: no celular ela fica embaixo e seria empurrada quando os carros chegassem */}
+        {carros && (
+          <aside className={styles.resumo} aria-labelledby="titulo-resumo">
+            <h2 id="titulo-resumo">Período e valor</h2>
+            <Campo
+              rotulo="Início"
+              type="date"
+              min={hoje}
+              value={dataInicio}
+              onChange={(e) => setDataInicio(e.target.value)}
+              erro={erros.dataInicio}
+            />
+            <Campo
+              rotulo="Fim"
+              type="date"
+              min={dataInicio || hoje}
+              value={dataFim}
+              onChange={(e) => setDataFim(e.target.value)}
+              erro={erros.dataFim}
+            />
+            {total !== null ? (
+              <div className={styles.conta} aria-live="polite">
+                <span className={styles.ajuda}>
+                  {diarias} {diarias === 1 ? 'diária' : 'diárias'} de{' '}
+                  {formatarMoeda(escolhido.valorDiaria)}
+                </span>
+                <span className={styles.total}>{formatarMoeda(total)}</span>
+              </div>
+            ) : (
+              <p className={styles.ajuda}>
+                {escolhido ? 'Informe as datas para ver o valor.' : 'Escolha um automóvel.'}
+              </p>
+            )}
+            {descartaParecer && (
+              <p className={styles.alerta}>
+                Este pedido já tem parecer. Ao salvar, o parecer é descartado e o pedido volta para
+                análise.
+              </p>
+            )}
+            <Aviso>{erroGeral}</Aviso>
+            <Botao variante="principal" type="submit" disabled={enviando}>
+              {enviando ? 'Salvando…' : modificando ? 'Salvar alterações' : 'Enviar pedido'}
+            </Botao>
+            {modificando && (
+              <Link className={styles.linkSecundario} to={`${base}/${id}`}>
+                Voltar sem alterar
+              </Link>
+            )}
+          </aside>
+        )}
       </form>
 
       <Dialogo

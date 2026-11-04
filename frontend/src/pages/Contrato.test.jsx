@@ -14,6 +14,8 @@ const ONIX = {
   modelo: 'Onix',
   ano: 2024,
   valorDiaria: 180,
+  proprietarioId: ROTA_SUL.id,
+  proprietario: 'Locadora Rota Sul',
 }
 
 const PARECER = {
@@ -76,6 +78,23 @@ function pedido(status, sobrescrever = {}) {
 
 describe('Executar contrato', () => {
   afterEach(() => vi.unstubAllGlobals())
+
+  it('empresa que não é dona do carro não vê a opção de ficar com ele', async () => {
+    simularApi({
+      'GET /api/auth/me': [
+        200,
+        { ...ROTA_SUL, id: 2, login: 'vialeste', nome: 'Locadora Via Leste' },
+      ],
+      'GET /api/pedidos/3': [200, pedido('APROVADO')],
+    })
+    renderizarEm('/fila/3')
+    const usuario = userEvent.setup()
+
+    await usuario.click(await screen.findByRole('button', { name: 'Executar contrato' }))
+    const dialogo = await screen.findByRole('dialog', { name: 'Executar contrato' })
+    expect(within(dialogo).getByText('O cliente fica proprietário')).toBeInTheDocument()
+    expect(within(dialogo).queryByText('A empresa fica proprietária')).not.toBeInTheDocument()
+  })
 
   it('a empresa vê as opções de cliente e empresa, com os nomes reais, e sem crédito', async () => {
     simularApi({

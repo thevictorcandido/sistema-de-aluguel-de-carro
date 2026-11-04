@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useState } from 'react'
-import { Link, useLocation, useParams } from 'react-router'
+import { Link, useParams } from 'react-router'
 import Aviso from '../../components/Aviso/Aviso.jsx'
 import Botao, { BotaoLink } from '../../components/Botao/Botao.jsx'
 import CaminhoPedido from '../../components/CaminhoPedido/CaminhoPedido.jsx'
@@ -10,6 +10,7 @@ import SeloStatus from '../../components/SeloStatus/SeloStatus.jsx'
 import Toast from '../../components/Toast/Toast.jsx'
 import { pedidos as apiPedidos } from '../../services/api.js'
 import { formatarData, formatarMoeda } from '../../utils/formatos.js'
+import { useAvisoDeNavegacao } from '../../utils/useAvisoDeNavegacao.js'
 import { useTituloPagina } from '../../utils/useTituloPagina.js'
 import pagina from '../Pagina.module.css'
 import styles from '../Pedidos.module.css'
@@ -110,12 +111,10 @@ function FormParecer({ pedidoId, aoRegistrar }) {
 export default function AnalisePedido() {
   const { id } = useParams()
   useTituloPagina(`Análise do pedido #${id}`)
-  const local = useLocation()
   const [pedido, setPedido] = useState(null)
   const [erro, setErro] = useState(null)
   const [erroAcao, setErroAcao] = useState('')
-  const [aviso, setAviso] = useState(local.state?.aviso ?? '')
-  const limparAviso = useCallback(() => setAviso(''), [])
+  const [aviso, setAviso, limparAviso] = useAvisoDeNavegacao()
   const [executando, setExecutando] = useState(false)
 
   const carregar = useCallback(async () => {

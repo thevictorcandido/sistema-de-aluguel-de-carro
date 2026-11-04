@@ -29,7 +29,9 @@
 }
 
 .link {
-  display: block;
+  display: flex;
+  align-items: center;
+  min-height: var(--control-height);
   padding: 7px 10px;
   border-radius: var(--radius-control);
   color: var(--muted);
@@ -96,6 +98,9 @@
   top: 8px;
   left: 8px;
   z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-height);
   padding: 8px 12px;
   border-radius: var(--radius-control);
   background: var(--text);
@@ -123,8 +128,8 @@
 .abrirMenu,
 .fecharMenu {
   display: none;
-  width: 36px;
-  height: 36px;
+  width: max(36px, var(--control-height));
+  height: max(36px, var(--control-height));
   border: 0;
   border-radius: var(--radius-control);
   background: transparent;

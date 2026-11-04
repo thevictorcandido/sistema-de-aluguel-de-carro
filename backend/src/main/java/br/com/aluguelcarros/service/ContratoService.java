@@ -52,7 +52,7 @@ public class ContratoService {
 		Agente agente = (Agente) Hibernate.unproxy(agentes.findById(agenteId)
 				.orElseThrow(() -> new RecursoNaoEncontradoException("Agente não encontrado.")));
 		pedido.contratar();
-		validar(agente, dados);
+		validar(agente, pedido, dados);
 
 		Contrato contrato = new Contrato(pedido, agente, dados.tipo(), LocalDate.now(relogio));
 		if (dados.credito() != null) {
@@ -69,10 +69,15 @@ public class ContratoService {
 		return contratos.findAllByOrderByIdDesc().stream().map(ContratoResponse::de).toList();
 	}
 
-	private static void validar(Agente agente, ContratoRequest dados) {
+	private static void validar(Agente agente, PedidoAluguel pedido, ContratoRequest dados) {
 		boolean banco = agente instanceof Banco;
 		if (dados.tipo() == TipoContrato.PROPRIEDADE_EMPRESA && !(agente instanceof Empresa)) {
 			throw CampoInvalidoException.invalido("tipo", "Só uma empresa fica proprietária pelo contrato.");
+		}
+		// A empresa só continua dona de um carro que já é dela; não pode tomar o automóvel de outro agente
+		if (dados.tipo() == TipoContrato.PROPRIEDADE_EMPRESA
+				&& !pedido.getAutomovel().getProprietario().getId().equals(agente.getId())) {
+			throw CampoInvalidoException.invalido("tipo", "Só a empresa dona do automóvel fica proprietária pelo contrato.");
 		}
 		if (dados.tipo() == TipoContrato.PROPRIEDADE_BANCO && !banco) {
 			throw CampoInvalidoException.invalido("tipo", "Só um banco fica proprietário pelo contrato.");
