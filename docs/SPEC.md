@@ -173,3 +173,5 @@ O GitHub Actions roda `mvn verify`, `vitest` e Biome em cada PR. O Playwright ro
 |---|---|---|
 | 2026-11-04 | Exclusão de cliente bloqueada também por contrato executado | O enunciado só fala em pedido ativo, mas apagar o cliente apagaria o contrato e o registro de propriedade do automóvel |
 | 2026-11-04 | Sem pacote `dto`; classe principal em `application` e `SecurityConfig` em `config` | Seguir a organização usada nas aulas e na prova (CandidatosTSE_2, BD_RestAPI_PostgreSQL, JWT_RestAPI). As classes de entrada e saída ficam em `model`, como o `LoginRequest` do JWT_RestAPI, e nunca levam o hash da senha |
+| 2026-11-05 | RLS ligado em todas as tabelas do Supabase, sem políticas, pela migração `db/supabase/V2_1__ativa_rls.sql` | O Supabase publica o schema `public` pela API REST dele; sem RLS, a chave `anon` leria CPFs e hashes de senha. A API Spring conecta como dona das tabelas e não é afetada. A migração fica fora de `db/migration` porque o H2 não tem RLS |
+| 2026-11-05 | Testes da API e ponta a ponta sempre no perfil `local` | O `backend/.env` ativa o perfil `supabase`; sem fixar o perfil, `mvn verify` e `npm run e2e` rodariam contra o banco no ar |

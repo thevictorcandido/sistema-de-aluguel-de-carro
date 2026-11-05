@@ -127,13 +127,13 @@ Sem nenhuma variável, a API sobe no perfil `local`, com banco H2 em memória. P
 
 | Variável | Descrição | Exemplo |
 | :--- | :--- | :--- |
-| `SPRING_PROFILES_ACTIVE` | Perfil de banco | `supabase` |
+| `spring.profiles.active` | Perfil de banco. No `.env` vai com este nome, em minúsculas e com pontos; `SPRING_PROFILES_ACTIVE` só vale como variável do sistema | `supabase` |
 | `DB_URL` | JDBC do Session pooler do Supabase | `jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:5432/postgres?sslmode=require` |
 | `DB_USER` | Usuário do banco | `postgres.abcdefghijkl` |
 | `DB_PASSWORD` | Senha do banco | — |
 | `JWT_SECRET` | Chave de assinatura do token, 32 caracteres ou mais | — |
 
-O arquivo `.env` não vai para o git.
+O arquivo `.env` não vai para o git. Na primeira subida com o perfil `supabase`, o Flyway cria as tabelas e os dados de exemplo; o log mostra `The following 1 profile is active: "supabase"`. Se aparecer `falling back to 1 default profile: "local"`, a API está no H2 e nada chega ao Supabase. Nessa subida também entra a migração `db/supabase/V2_1__ativa_rls.sql`, que liga o RLS em todas as tabelas para que a API REST do Supabase não exponha os dados. Os testes (`mvn verify` e `npm run e2e`) ficam sempre no H2, mesmo com o `.env` preenchido.
 
 #### 2 Front-end (React, Vite)
 

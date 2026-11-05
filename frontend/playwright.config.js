@@ -26,7 +26,8 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: `${mvnw} -q spring-boot:run -Dspring-boot.run.arguments=--server.port=${PORTA_API}`,
+      // Perfil local fixo: com o backend/.env preenchido, a API iria para o Supabase
+      command: `${mvnw} -q spring-boot:run -Dspring-boot.run.profiles=local -Dspring-boot.run.arguments=--server.port=${PORTA_API}`,
       cwd: '../backend',
       url: `http://127.0.0.1:${PORTA_API}/api/health`,
       timeout: 180_000,
