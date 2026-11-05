@@ -1,6 +1,6 @@
 # Especificação técnica
 
-Como o sistema será construído. Os requisitos vêm das [histórias de usuário](uml/v1/historias-de-usuario.md), e a aparência vem do [DESIGN.md](../DESIGN.md).
+Como o sistema será construído. Os requisitos vêm das [histórias de usuário](uml/v3/historias-de-usuario.md), e a aparência vem do [DESIGN.md](../DESIGN.md).
 
 ## Escopo
 
@@ -25,7 +25,7 @@ O Vite repassa `/api` para a porta 8080. Assim, front e API ficam na mesma orige
 
 ### Pacotes
 
-Seguem o [diagrama de pacotes](uml/v2/pacotes.svg) e a organização dos projetos da disciplina, como o CandidatosTSE_2: sem pacote `dto`.
+Seguem o [diagrama de pacotes](uml/v3/pacotes.svg) e a organização dos projetos da disciplina, como o CandidatosTSE_2: sem pacote `dto`.
 
 | Lado | Pacote | Responsabilidade |
 |---|---|---|
@@ -42,6 +42,7 @@ Seguem o [diagrama de pacotes](uml/v2/pacotes.svg) e a organização dos projeto
 | Front | `components` | Placa, selo de status, caminho do pedido, tabela, campos, diálogo |
 | Front | `contexts` | Sessão do usuário |
 | Front | `services` | Cliente HTTP da API |
+| Front | `utils` | Formatação de datas, moeda e documentos, título da página e aviso de navegação |
 
 ### Configuração
 
@@ -128,17 +129,22 @@ Para mostrar a renda comprometida na análise, como o DESIGN.md propõe:
 - `PedidoAluguel` calcula `getValorTotal()`: diárias, contando início e fim, vezes `valorDiaria` do automóvel.
 - A análise mostra `valorTotal / soma dos rendimentos`, com a referência fixa de 30%. A referência é só informação para o agente: o sistema não aprova nem reprova sozinho.
 
-## Mudanças no modelo para a v2 dos diagramas
+## Mudanças no modelo entre as versões dos diagramas
 
-A nota olha o alinhamento entre modelo e código. Cada mudança abaixo entra em `docs/uml/v2` na mesma tarefa que a implementa. As da tarefa 2 já estão no diagrama v2.
+A nota olha o alinhamento entre modelo e código. As mudanças da tarefa 2 entraram em `docs/uml/v2`, e as demais na revisão final em `docs/uml/v3`.
 
-| Classe | Mudança | Motivo |
-|---|---|---|
-| `Automovel` | `+ valorDiaria: BigDecimal` | Valor do pedido e renda comprometida |
-| `PedidoAluguel` | `+ getValorTotal(): BigDecimal` | Idem |
-| `Cliente` | `+ getRendaMensal(): BigDecimal` | Idem |
-| `Usuario` | `+ getNome(): String`, abstrato | Nome do cliente, da empresa ou do banco nas telas |
-| `StatusPedido` | `+ permiteAlteracao()` e `+ ativo()` | Regras de modificar, cancelar e excluir cliente num lugar só |
+| Versão | Classe | Mudança | Motivo |
+|---|---|---|---|
+| v2 | `Automovel` | `+ valorDiaria: BigDecimal` | Valor do pedido e renda comprometida |
+| v2 | `PedidoAluguel` | `+ getValorTotal(): BigDecimal` | Idem |
+| v2 | `Cliente` | `+ getRendaMensal(): BigDecimal` | Idem |
+| v2 | `Usuario` | `+ getNome(): String`, abstrato | Nome do cliente, da empresa ou do banco nas telas |
+| v2 | `StatusPedido` | `+ permiteAlteracao()` e `+ ativo()` | Regras de modificar, cancelar e excluir cliente num lugar só |
+| v3 | `Cliente` | `+ removerRendimento(r)` e `+ atualizarDados(...)` | Edição de dados e remoção de rendimentos em Meus dados |
+| v3 | `Rendimento` | `+ atualizar(entidadeEmpregadora, valor)` | Alterar um rendimento já informado |
+| v3 | `Automovel` | `+ atualizar(...)` | Edição de automóvel pelo proprietário atual |
+| v3 | `PedidoAluguel` | `+ exigirAlteravel(acao)` | Verificação de status antes de modificar ou cancelar |
+| v3 | `Contrato` | `~ associarCredito(credito)` | Garantir no máximo um contrato de crédito por aluguel |
 
 ## Testes e qualidade
 
