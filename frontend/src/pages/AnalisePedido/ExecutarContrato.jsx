@@ -17,7 +17,8 @@ function opcoesPara(usuario, pedido) {
       detalhe: `${pedido.cliente.nome} passa a ser dono do automóvel.`,
     },
   ]
-  if (usuario.perfil === 'EMPRESA') {
+  // A empresa só fica com um carro que já é dela; não toma o automóvel de outro agente
+  if (usuario.perfil === 'EMPRESA' && pedido.automovel.proprietarioId === usuario.id) {
     opcoes.push({
       tipo: 'PROPRIEDADE_EMPRESA',
       titulo: 'A empresa fica proprietária',

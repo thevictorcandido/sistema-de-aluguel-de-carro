@@ -129,6 +129,13 @@ class PedidoControllerTest {
 	}
 
 	@Test
+	void idQueNaoENumeroRespondeNoFormatoDeErro() throws Exception {
+		mockMvc.perform(get("/api/pedidos/abc").cookie(SessaoTeste.sessao(mockMvc, "marina")))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.mensagem").value("O endereço pedido não é válido."));
+	}
+
+	@Test
 	void donoEAgenteVeemODetalhe() throws Exception {
 		Long daMarina = criarPedido(SessaoTeste.sessao(mockMvc, "marina"));
 

@@ -144,6 +144,12 @@
   color: var(--muted);
 }
 
+.vazio a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-height);
+}
+
 .esqueleto {
   height: 240px;
   border-radius: var(--radius-card);
@@ -617,8 +623,8 @@
 .icone {
   display: inline-grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
+  width: var(--control-height);
+  height: var(--control-height);
   border: 0;
   border-radius: var(--radius-control);
   background: transparent;

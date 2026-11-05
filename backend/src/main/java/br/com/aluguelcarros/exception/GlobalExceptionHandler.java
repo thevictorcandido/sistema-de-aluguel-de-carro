@@ -3,6 +3,7 @@ package br.com.aluguelcarros.exception;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -10,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import br.com.aluguelcarros.model.ErroResponse;
 
@@ -31,6 +33,12 @@ public class GlobalExceptionHandler {
 		return resposta(HttpStatus.BAD_REQUEST, new ErroResponse("Os dados enviados estão em formato inválido."));
 	}
 
+	/** Id que não é número no caminho, como /api/pedidos/abc. */
+	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
+	public ResponseEntity<ErroResponse> parametroInvalido() {
+		return resposta(HttpStatus.BAD_REQUEST, new ErroResponse("O endereço pedido não é válido."));
+	}
+
 	@ExceptionHandler(CampoInvalidoException.class)
 	public ResponseEntity<ErroResponse> campo(CampoInvalidoException e) {
 		HttpStatus status = e.isConflito() ? HttpStatus.CONFLICT : HttpStatus.BAD_REQUEST;
@@ -45,6 +53,13 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(RecursoNaoEncontradoException.class)
 	public ResponseEntity<ErroResponse> naoEncontrado(RecursoNaoEncontradoException e) {
 		return resposta(HttpStatus.NOT_FOUND, new ErroResponse(e.getMessage()));
+	}
+
+	/** Duas requisições ao mesmo tempo venceram a checagem do serviço, e o banco recusou pela constraint. */
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<ErroResponse> conflitoNoBanco() {
+		return resposta(HttpStatus.CONFLICT,
+				new ErroResponse("Estes dados mudaram enquanto você salvava. Recarregue a página e tente de novo."));
 	}
 
 	@ExceptionHandler(RegraNegocioException.class)

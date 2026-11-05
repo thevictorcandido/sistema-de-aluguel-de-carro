@@ -12,6 +12,18 @@ export const EVENTO_SESSAO_EXPIRADA = 'aluguel:sessao-expirada'
 
 const MENSAGEM_PADRAO = 'Não foi possível falar com o servidor. Tente de novo em instantes.'
 
+// Resposta fora do formato da API (página de erro de um proxy, por exemplo) vira null, não uma exceção de parse
+function lerJson(texto) {
+  if (!texto) {
+    return null
+  }
+  try {
+    return JSON.parse(texto)
+  } catch {
+    return null
+  }
+}
+
 async function requisicao(metodo, caminho, corpo) {
   let resposta
   try {
@@ -29,7 +41,7 @@ async function requisicao(metodo, caminho, corpo) {
   }
 
   const texto = await resposta.text()
-  const dados = texto ? JSON.parse(texto) : null
+  const dados = lerJson(texto)
   if (!resposta.ok) {
     // 401 fora do login e da checagem inicial: a sessão venceu no meio do uso
     if (resposta.status === 401 && !caminho.startsWith('/auth/')) {

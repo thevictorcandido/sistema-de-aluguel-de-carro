@@ -156,7 +156,7 @@ Tabela com placa, matrícula, marca, modelo, ano e proprietário. Cadastrar e ed
 
 ## Celular
 
-A moldura some e a folha vira a tela inteira. Barra superior de 48px com botão de menu, título e uma ação; o menu abre como painel lateral. Os cartões de contagem viram uma fila de chips com rolagem horizontal. A tabela vira lista de cartões com placa, carro, período e status. Na grade do detalhe, cada bloco ocupa a largura toda, na mesma ordem.
+A moldura some e a folha vira a tela inteira. Barra superior de 48px com botão de menu, título e uma ação; o menu abre como painel lateral. Em tela de toque, botões, campos e itens do menu sobem para 44px de altura, o alvo mínimo para o dedo; no computador ficam os 32px e 40px da tabela de componentes. Os cartões de contagem viram uma fila de chips com rolagem horizontal. A tabela vira lista de cartões com placa, carro, período e status. Na grade do detalhe, cada bloco ocupa a largura toda, na mesma ordem.
 
 ## Acessibilidade
 

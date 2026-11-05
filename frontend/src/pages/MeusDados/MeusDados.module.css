@@ -141,8 +141,8 @@
 .icone {
   display: inline-grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
+  width: var(--control-height);
+  height: var(--control-height);
   border: 0;
   border-radius: var(--radius-control);
   background: transparent;

@@ -88,10 +88,9 @@ export function formatarPeriodo(inicio, fim) {
   return `${formatarData(inicio).slice(0, 5)} a ${formatarData(fim).slice(0, 5)}`
 }
 
-// Data de hoje no formato do campo de data, no fuso do navegador.
+// Data de hoje no formato do campo de data, no fuso de Brasília, o mesmo que a API usa para validar.
 export function hojeIso(agora = new Date()) {
-  const local = new Date(agora.getTime() - agora.getTimezoneOffset() * 60000)
-  return local.toISOString().slice(0, 10)
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo' }).format(agora)
 }
 
 // Diárias contando o dia de início e o de fim, como a API calcula.
