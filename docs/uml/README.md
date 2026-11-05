@@ -8,6 +8,23 @@ Cada revisão fica em uma pasta própria, sem sobrescrever as anteriores. Os arq
 |---|---|---|
 | [v1](v1) | 2026-11-02 | Modelos iniciais, a partir do enunciado |
 | [v2](v2) | 2026-11-04 | Pacotes sem `dto`, com `application` e `config`, como nos projetos da disciplina. Classes alinhadas ao código da tarefa 2: `valorDiaria` em `Automovel`, `getValorTotal` em `PedidoAluguel`, `getRendaMensal` em `Cliente`, `getNome` em `Usuario` e as regras de status em `StatusPedido` |
+| [v3](v3) | 2026-11-04 | Revisão final alinhada ao código das tarefas 3 a 12: métodos de manutenção em `Cliente`, `Rendimento`, `Automovel`, `PedidoAluguel` e `Contrato`; pacote `utils` no front-end e dependências de `security` no back-end; histórias de usuário com todas as regras implementadas |
+
+## v3
+
+- [Histórias de usuário](v3/historias-de-usuario.md)
+
+### Casos de uso
+
+![Diagrama de casos de uso v3](v3/casos-de-uso.svg)
+
+### Classes
+
+![Diagrama de classes v3](v3/classes.svg)
+
+### Pacotes
+
+![Diagrama de pacotes v3](v3/pacotes.svg)
 
 ## v2
 
